@@ -1,0 +1,39 @@
+# OpenTelemetry Collector capture configuration for offline minimal-mode sessions.
+# Captures OTLP traces, metrics, and logs to newline-delimited JSON files
+# for subsequent ingestion via scripts/ingest_otel_capture.py.
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+    send_batch_size: 256
+    timeout: 2s
+
+exporters:
+  file/traces:
+    path: /var/otel-capture/traces.jsonl
+  file/metrics:
+    path: /var/otel-capture/metrics.jsonl
+  file/logs:
+    path: /var/otel-capture/logs.jsonl
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [file/traces]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [file/metrics]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [file/logs]
