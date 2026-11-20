@@ -3,9 +3,12 @@ from datetime import datetime
 from fastapi import HTTPException, status
 
 from services.ingestion.normalizer import (
+    normalize_deployment_status,
     normalize_event_type,
+    normalize_metric_name,
     normalize_service_name,
     normalize_severity,
+    normalize_span_status,
     normalize_timestamp_utc,
 )
 
@@ -43,6 +46,42 @@ def parse_event_type_filter(event_type: str | None) -> str | None:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail=f"Invalid event_type filter: {exc}",
+        ) from exc
+
+
+def parse_metric_name_filter(metric_name: str | None) -> str | None:
+    if metric_name is None:
+        return None
+    try:
+        return normalize_metric_name(metric_name)
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail=f"Invalid metric_name filter: {exc}",
+        ) from exc
+
+
+def parse_span_status_filter(status_code: str | None) -> str | None:
+    if status_code is None:
+        return None
+    try:
+        return normalize_span_status(status_code)
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail=f"Invalid status_code filter: {exc}",
+        ) from exc
+
+
+def parse_deployment_status_filter(deployment_status: str | None) -> str | None:
+    if deployment_status is None:
+        return None
+    try:
+        return normalize_deployment_status(deployment_status)
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail=f"Invalid status filter: {exc}",
         ) from exc
 
 

@@ -1,11 +1,16 @@
 import hashlib
+import json
 import math
 import re
 from datetime import UTC, datetime
+from typing import Any
 
 _SERVICE_NAME_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,127}\Z")
 _SERVICE_SEP_RE = re.compile(r"[_. ]+")
 _MULTI_HYPHEN_RE = re.compile(r"-{2,}")
+
+_METRIC_NAME_RE = re.compile(r"^[a-z0-9_.]{1,128}\Z")
+_METRIC_SEP_RE = re.compile(r"[ -]+")
 
 CANONICAL_SEVERITIES: frozenset[str] = frozenset(
     {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
@@ -18,6 +23,16 @@ SEVERITY_ALIASES: dict[str, str] = {
     "CRIT": "CRITICAL",
     "FATAL": "CRITICAL",
 }
+
+CANONICAL_SPAN_KINDS: frozenset[str] = frozenset(
+    {"INTERNAL", "SERVER", "CLIENT", "PRODUCER", "CONSUMER"}
+)
+
+CANONICAL_SPAN_STATUSES: frozenset[str] = frozenset({"UNSET", "OK", "ERROR"})
+
+CANONICAL_DEPLOYMENT_STATUSES: frozenset[str] = frozenset(
+    {"started", "succeeded", "failed", "rolled_back"}
+)
 
 _EPOCH_MS_THRESHOLD = 1e12
 _MAX_EVENT_TYPE_LENGTH = 64
@@ -138,3 +153,68 @@ def compute_dedup_hash(
             f"|{message}|{trace_id or ''}|{span_id or ''}"
         )
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def normalize_metric_name(name: str) -> str:
+    """Normalize metric names to lowercase [a-z0-9_.] (1..128 chars)."""
+    if not isinstance(name, str):
+        raise ValueError("metric_name must be a string")
+
+    cleaned = _METRIC_SEP_RE.sub("_", name.strip().lower())
+    if not _METRIC_NAME_RE.fullmatch(cleaned):
+        raise ValueError(
+            f"Invalid metric_name {name!r}: must normalize to ^[a-z0-9_.]{{1,128}}$"
+        )
+    return cleaned
+
+
+def compute_metric_dedup_hash(
+    service_name: str,
+    metric_name: str,
+    timestamp_utc: datetime,
+    labels: dict[str, Any] | None = None,
+) -> str:
+    """Compute deterministic 64-char SHA-256 hash for a metric point."""
+    utc_ts = normalize_timestamp_utc(timestamp_utc)
+    canonical_labels = json.dumps(
+        labels or {}, sort_keys=True, separators=(",", ":"), allow_nan=False
+    )
+    canonical = f"metric|{service_name}|{metric_name}|{utc_ts.isoformat()}|{canonical_labels}"
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def normalize_span_kind(value: str | None = None) -> str:
+    """Normalize span kind to canonical uppercase set, defaulting None to 'INTERNAL'."""
+    if value is None:
+        return "INTERNAL"
+    if not isinstance(value, str):
+        raise ValueError("span_kind must be a string")
+
+    cleaned = value.strip().upper()
+    if cleaned not in CANONICAL_SPAN_KINDS:
+        raise ValueError(f"Unknown span_kind value: {value!r}")
+    return cleaned
+
+
+def normalize_span_status(value: str | None = None) -> str:
+    """Normalize span status code to canonical uppercase set, defaulting None to 'UNSET'."""
+    if value is None:
+        return "UNSET"
+    if not isinstance(value, str):
+        raise ValueError("status_code must be a string")
+
+    cleaned = value.strip().upper()
+    if cleaned not in CANONICAL_SPAN_STATUSES:
+        raise ValueError(f"Unknown span status_code value: {value!r}")
+    return cleaned
+
+
+def normalize_deployment_status(value: str) -> str:
+    """Normalize deployment status to canonical lowercase set."""
+    if not isinstance(value, str):
+        raise ValueError("deployment status must be a string")
+
+    cleaned = value.strip().lower()
+    if cleaned not in CANONICAL_DEPLOYMENT_STATUSES:
+        raise ValueError(f"Unknown deployment status value: {value!r}")
+    return cleaned
