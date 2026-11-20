@@ -1,0 +1,101 @@
+{
+  "events": [
+    {
+      "service": "api-gateway",
+      "timestamp": "2026-11-20T14:25:00Z",
+      "event_type": "request",
+      "severity": "INFO",
+      "message": "Received POST /v1/checkout request",
+      "trace_id": "trace-9f8e7d6c5b4a",
+      "span_id": "span-gw-01",
+      "attributes": {
+        "http_method": "POST",
+        "path": "/v1/checkout",
+        "region": "eu-west-1"
+      }
+    },
+    {
+      "service": "checkout-service",
+      "timestamp": "2026-11-20T14:25:01Z",
+      "event_type": "log",
+      "severity": "INFO",
+      "message": "Cart validated; initiating card charge",
+      "trace_id": "trace-9f8e7d6c5b4a",
+      "span_id": "span-chk-02",
+      "attributes": {
+        "order_id": "ord-48291",
+        "item_count": 3
+      }
+    },
+    {
+      "service": "payment-service",
+      "timestamp": "2026-11-20T14:25:03Z",
+      "event_type": "latency_alert",
+      "severity": "WARNING",
+      "message": "Upstream card processor response latency exceeded 2500ms",
+      "external_id": "pay-warn-1001",
+      "trace_id": "trace-9f8e7d6c5b4a",
+      "span_id": "span-pay-03",
+      "attributes": {
+        "provider": "stripe-eu",
+        "latency_ms": 2840
+      }
+    },
+    {
+      "service": "payment-service",
+      "timestamp": "2026-11-20T14:25:06Z",
+      "event_type": "http_error",
+      "severity": "ERROR",
+      "message": "Upstream card processor timed out after 5000ms",
+      "external_id": "pay-err-1002",
+      "trace_id": "trace-9f8e7d6c5b4a",
+      "span_id": "span-pay-04",
+      "attributes": {
+        "provider": "stripe-eu",
+        "timeout_ms": 5000,
+        "status_code": 504
+      }
+    },
+    {
+      "service": "checkout-service",
+      "timestamp": "2026-11-20T14:25:07Z",
+      "event_type": "log",
+      "severity": "ERROR",
+      "message": "Payment charge failed for order ord-48291; retry scheduled",
+      "trace_id": "trace-9f8e7d6c5b4a",
+      "span_id": "span-chk-05",
+      "attributes": {
+        "order_id": "ord-48291",
+        "retry_in_seconds": 30
+      }
+    },
+    {
+      "service": "api-gateway",
+      "timestamp": "2026-11-20T14:25:08Z",
+      "event_type": "http_error",
+      "severity": "WARNING",
+      "message": "Returned HTTP 504 for POST /v1/checkout",
+      "trace_id": "trace-9f8e7d6c5b4a",
+      "span_id": "span-gw-06",
+      "attributes": {
+        "status_code": 504,
+        "upstream": "checkout-service"
+      }
+    },
+    {
+      "service": "payment-service",
+      "timestamp": "2026-11-20T14:26:12Z",
+      "event_type": "log",
+      "severity": "INFO",
+      "message": "Payment retry succeeded after failover to secondary processor",
+      "external_id": "pay-ok-1003",
+      "trace_id": "trace-1a2b3c4d5e6f",
+      "span_id": "span-pay-07",
+      "attributes": {
+        "order_id": "ord-48291",
+        "provider": "adyen-eu",
+        "latency_ms": 310
+      }
+    }
+  ]
+}

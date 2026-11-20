@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from apps.api.src.core.config import get_settings
 from apps.api.src.core.database import engine
 from apps.api.src.core.logging import configure_logging
-from apps.api.src.routes import events, health
+from apps.api.src.routes import events, health, incidents, services
 
 
 @asynccontextmanager
@@ -19,3 +19,5 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 app = FastAPI(title="SignalForge", lifespan=lifespan)
 app.include_router(health.router)
 app.include_router(events.router)
+app.include_router(services.router)
+app.include_router(incidents.router)
