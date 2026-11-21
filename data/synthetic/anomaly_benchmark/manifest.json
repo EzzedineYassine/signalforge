@@ -1,0 +1,147 @@
+{
+  "synthetic": true,
+  "is_synthetic": true,
+  "seed": 42,
+  "days": 7,
+  "freq_minutes": 1,
+  "row_count": 10080,
+  "anomaly_row_count": 1288,
+  "feature_columns": [
+    "cpu_utilization",
+    "memory_utilization",
+    "request_latency_ms",
+    "request_throughput",
+    "error_rate",
+    "db_connections",
+    "queue_depth"
+  ],
+  "splits": {
+    "train": {
+      "rows": 6048,
+      "anomaly_rows": 0,
+      "start_time_utc": "2026-11-01T00:00:00+00:00",
+      "end_time_utc": "2026-11-05T04:47:00+00:00"
+    },
+    "validation": {
+      "rows": 2016,
+      "anomaly_rows": 402,
+      "start_time_utc": "2026-11-05T04:48:00+00:00",
+      "end_time_utc": "2026-11-06T14:23:00+00:00"
+    },
+    "test": {
+      "rows": 2016,
+      "anomaly_rows": 886,
+      "start_time_utc": "2026-11-06T14:24:00+00:00",
+      "end_time_utc": "2026-11-07T23:59:00+00:00"
+    }
+  },
+  "fault_events": [
+    {
+      "scenario": "cpu_saturation",
+      "service": "checkout-service",
+      "split": "validation",
+      "start_time_utc": "2026-11-05T10:50:00Z",
+      "end_time_utc": "2026-11-05T14:10:00Z",
+      "affected_metrics": [
+        "cpu_utilization",
+        "request_latency_ms",
+        "request_throughput",
+        "error_rate"
+      ],
+      "description": "Synthetic CPU saturation causing latency elevation and modest throttling.",
+      "is_synthetic": true
+    },
+    {
+      "scenario": "network_latency",
+      "service": "api-gateway",
+      "split": "validation",
+      "start_time_utc": "2026-11-06T01:37:00Z",
+      "end_time_utc": "2026-11-06T04:57:00Z",
+      "affected_metrics": [
+        "request_latency_ms",
+        "queue_depth",
+        "error_rate"
+      ],
+      "description": "Synthetic network jitter spiking request latency and inflight queues.",
+      "is_synthetic": true
+    },
+    {
+      "scenario": "db_connection_exhaustion",
+      "service": "orders-service",
+      "split": "test",
+      "start_time_utc": "2026-11-06T16:24:00Z",
+      "end_time_utc": "2026-11-06T18:44:00Z",
+      "affected_metrics": [
+        "db_connections",
+        "request_latency_ms",
+        "error_rate",
+        "request_throughput"
+      ],
+      "description": "Synthetic PostgreSQL connection pool exhaustion causing timeouts and errors.",
+      "is_synthetic": true
+    },
+    {
+      "scenario": "payment_service_failure",
+      "service": "payment-service",
+      "split": "test",
+      "start_time_utc": "2026-11-06T21:47:00Z",
+      "end_time_utc": "2026-11-07T00:07:00Z",
+      "affected_metrics": [
+        "error_rate",
+        "request_latency_ms",
+        "request_throughput"
+      ],
+      "description": "Synthetic payment gateway outage producing high HTTP 5xx rates and timeouts.",
+      "is_synthetic": true
+    },
+    {
+      "scenario": "memory_leak",
+      "service": "recommendation-service",
+      "split": "test",
+      "start_time_utc": "2026-11-07T03:10:00Z",
+      "end_time_utc": "2026-11-07T07:51:00Z",
+      "affected_metrics": [
+        "memory_utilization",
+        "cpu_utilization",
+        "request_latency_ms",
+        "error_rate"
+      ],
+      "description": "Synthetic gradual memory leak ramping heap usage until GC thrashing occurs.",
+      "is_synthetic": true
+    },
+    {
+      "scenario": "faulty_deployment",
+      "service": "checkout-service",
+      "split": "test",
+      "start_time_utc": "2026-11-07T10:53:00Z",
+      "end_time_utc": "2026-11-07T13:13:00Z",
+      "affected_metrics": [
+        "error_rate",
+        "cpu_utilization",
+        "memory_utilization",
+        "request_latency_ms"
+      ],
+      "description": "Synthetic bad release causing abrupt error, CPU, memory, and latency jumps.",
+      "is_synthetic": true
+    },
+    {
+      "scenario": "message_queue_backlog",
+      "service": "notification-worker",
+      "split": "test",
+      "start_time_utc": "2026-11-07T16:36:00Z",
+      "end_time_utc": "2026-11-07T19:36:00Z",
+      "affected_metrics": [
+        "queue_depth",
+        "request_latency_ms",
+        "memory_utilization",
+        "db_connections"
+      ],
+      "description": "Synthetic consumer slowdown creating sustained message queue depth buildup.",
+      "is_synthetic": true
+    }
+  ],
+  "files": {
+    "telemetry_csv": "telemetry.csv",
+    "manifest_json": "manifest.json"
+  }
+}

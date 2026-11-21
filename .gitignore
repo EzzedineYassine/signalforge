@@ -8,3 +8,6 @@ build/
 dist/
 .pytest_cache/
 .ruff_cache/
+data/synthetic/**/*.csv
+data/synthetic/**/*.parquet
+
