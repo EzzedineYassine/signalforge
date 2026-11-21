@@ -18,6 +18,13 @@ from apps.api.src.schemas.events import (
     IngestionErrorItem,
 )
 from apps.api.src.schemas.incidents import IncidentListResponse, IncidentRead
+from apps.api.src.schemas.knowledge import (
+    KnowledgeIndexRequest,
+    KnowledgeIndexResponse,
+    KnowledgeSearchRequest,
+    KnowledgeSearchResponse,
+    RetrievedChunkResponse,
+)
 from apps.api.src.schemas.metrics import (
     MetricIngestRequest,
     MetricIngestResponse,
@@ -48,10 +55,15 @@ __all__ = [
     "IncidentListResponse",
     "IncidentRead",
     "IngestionErrorItem",
+    "KnowledgeIndexRequest",
+    "KnowledgeIndexResponse",
+    "KnowledgeSearchRequest",
+    "KnowledgeSearchResponse",
     "MetricIngestRequest",
     "MetricIngestResponse",
     "MetricListResponse",
     "MetricPointRead",
+    "RetrievedChunkResponse",
     "ServiceListResponse",
     "ServiceSummary",
     "TraceIngestRequest",

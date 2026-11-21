@@ -8,14 +8,34 @@ from apps.api.src.services.anomaly_service import (
     compute_anomaly_dedup_hash,
     detect_and_persist_anomalies,
 )
+from apps.api.src.services.knowledge_service import (
+    DEFAULT_BM25_INDEX_PATH,
+    DEFAULT_KNOWLEDGE_DIR,
+    KnowledgeIndexResult,
+    KnowledgeSourceNotFoundError,
+    KnowledgeValidationError,
+    QdrantUnavailableError,
+    get_knowledge_retriever,
+    index_knowledge_base,
+    search_knowledge,
+)
 
 __all__ = [
     "AnomalyDetectionResult",
     "DEFAULT_ARTIFACT_DIR",
+    "DEFAULT_BM25_INDEX_PATH",
+    "DEFAULT_KNOWLEDGE_DIR",
     "DetectorName",
     "InsufficientMetricsError",
+    "KnowledgeIndexResult",
+    "KnowledgeSourceNotFoundError",
+    "KnowledgeValidationError",
+    "QdrantUnavailableError",
     "ServiceNotFoundError",
     "VALID_DETECTORS",
     "compute_anomaly_dedup_hash",
     "detect_and_persist_anomalies",
+    "get_knowledge_retriever",
+    "index_knowledge_base",
+    "search_knowledge",
 ]

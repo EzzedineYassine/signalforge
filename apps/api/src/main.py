@@ -12,6 +12,7 @@ from apps.api.src.routes import (
     events,
     health,
     incidents,
+    knowledge,
     metrics,
     services,
     traces,
@@ -34,3 +35,4 @@ app.include_router(metrics.router)
 app.include_router(traces.router)
 app.include_router(deployments.router)
 app.include_router(anomalies.router)
+app.include_router(knowledge.router)

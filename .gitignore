@@ -10,4 +10,5 @@ dist/
 .ruff_cache/
 data/synthetic/**/*.csv
 data/synthetic/**/*.parquet
+data/indexes/
 
