@@ -47,6 +47,7 @@ class Service(Base):
 
     metric_points: Mapped[list["MetricPoint"]] = relationship(back_populates="service")
     trace_spans: Mapped[list["TraceSpan"]] = relationship(back_populates="service")
+    anomalies: Mapped[list["Anomaly"]] = relationship(back_populates="service")
 
 
 class Event(Base):
@@ -201,4 +202,38 @@ class TraceSpan(Base):
         ),
         Index("ix_trace_spans_trace_id", "trace_id"),
         Index("ix_trace_spans_parent_span_id", "parent_span_id"),
+    )
+
+
+class Anomaly(Base):
+    __tablename__ = "anomalies"
+
+    id: Mapped[uuid.UUID] = _uuid_pk()
+    service_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("services.id", ondelete="RESTRICT"), nullable=False
+    )
+    detector_name: Mapped[str] = mapped_column(String(64), nullable=False)
+    timestamp_utc: Mapped[datetime] = _tstz(nullable=False)
+    score: Mapped[float] = mapped_column(DOUBLE_PRECISION, nullable=False)
+    threshold: Mapped[float] = mapped_column(DOUBLE_PRECISION, nullable=False)
+    is_anomaly: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    metric_names: Mapped[list[str]] = mapped_column(
+        JSONB, nullable=False, server_default=text("'[]'::jsonb")
+    )
+    details: Mapped[dict[str, Any]] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    dedup_hash: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
+    detected_at: Mapped[datetime] = _tstz(nullable=False, server_default=func.now())
+
+    service: Mapped[Service] = relationship(back_populates="anomalies")
+
+    __table_args__ = (
+        Index("ix_anomalies_service_id_timestamp_utc", "service_id", text("timestamp_utc DESC")),
+        Index(
+            "ix_anomalies_detector_name_is_anomaly_timestamp_utc",
+            "detector_name",
+            "is_anomaly",
+            text("timestamp_utc DESC"),
+        ),
     )

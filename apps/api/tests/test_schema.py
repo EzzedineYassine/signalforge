@@ -21,7 +21,8 @@ from apps.api.tests.conftest import alembic_config
 
 M1_TABLES = {"services", "events", "incidents", "deployments", "ingestion_failures"}
 M2_TABLES = {"metric_points", "trace_spans"}
-ALL_TABLES = M1_TABLES | M2_TABLES
+M3_TABLES = {"anomalies"}
+ALL_TABLES = M1_TABLES | M2_TABLES | M3_TABLES
 
 
 def _service(name: str = "svc-a") -> Service:
@@ -291,7 +292,7 @@ def test_migration_0002_downgrade_and_upgrade(test_engine: Engine) -> None:
         command.downgrade(cfg, "0001_initial_schema")
         existing = set(inspect(test_engine).get_table_names())
         assert M1_TABLES <= existing
-        assert M2_TABLES.isdisjoint(existing)
+        assert (M2_TABLES | M3_TABLES).isdisjoint(existing)
     finally:
         command.upgrade(cfg, "head")
     assert ALL_TABLES <= set(inspect(test_engine).get_table_names())

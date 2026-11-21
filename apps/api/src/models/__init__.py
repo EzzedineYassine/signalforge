@@ -1,5 +1,6 @@
 from apps.api.src.models.base import Base
 from apps.api.src.models.domain import (
+    Anomaly,
     Deployment,
     Event,
     Incident,
@@ -10,6 +11,7 @@ from apps.api.src.models.domain import (
 )
 
 __all__ = [
+    "Anomaly",
     "Base",
     "Deployment",
     "Event",

@@ -1,3 +1,9 @@
+from apps.api.src.schemas.anomalies import (
+    AnomalyDetectRequest,
+    AnomalyDetectResponse,
+    AnomalyListResponse,
+    AnomalyRead,
+)
 from apps.api.src.schemas.deployments import (
     DeploymentIngestRequest,
     DeploymentIngestResponse,
@@ -27,6 +33,10 @@ from apps.api.src.schemas.traces import (
 )
 
 __all__ = [
+    "AnomalyDetectRequest",
+    "AnomalyDetectResponse",
+    "AnomalyListResponse",
+    "AnomalyRead",
     "DeploymentIngestRequest",
     "DeploymentIngestResponse",
     "DeploymentListResponse",
