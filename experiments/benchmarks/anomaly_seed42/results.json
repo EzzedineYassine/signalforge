@@ -1,0 +1,135 @@
+{
+  "synthetic": true,
+  "seed": 42,
+  "days": 7,
+  "freq_minutes": 1,
+  "window_size": 30,
+  "feature_columns": [
+    "cpu_utilization",
+    "memory_utilization",
+    "request_latency_ms",
+    "request_throughput",
+    "error_rate",
+    "db_connections",
+    "queue_depth"
+  ],
+  "splits": {
+    "train_rows": 6048,
+    "validation_rows": 2016,
+    "test_rows": 2016,
+    "validation_fault_scenarios": [
+      "cpu_saturation",
+      "network_latency"
+    ],
+    "test_fault_scenarios": [
+      "db_connection_exhaustion",
+      "payment_service_failure",
+      "memory_leak",
+      "faulty_deployment",
+      "message_queue_backlog"
+    ],
+    "test_positive_rate": 0.439484126984127
+  },
+  "detectors": {
+    "rolling_zscore": {
+      "precision": 0.4501947690595437,
+      "recall": 0.9130925507900677,
+      "f1": 0.603056280283265,
+      "pr_auc": 0.5176186429201606,
+      "threshold": 1.242641544580219,
+      "total_fault_events": 5,
+      "detected_fault_events": 5,
+      "mean_detection_delay_minutes": 0.0,
+      "per_fault_delays_minutes": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "false_positives_per_hour": 52.46017699115045,
+      "true_positives": 809,
+      "false_positives": 988,
+      "true_negatives": 142,
+      "false_negatives": 77,
+      "per_fault_delays_by_scenario": {
+        "db_connection_exhaustion": 0.0,
+        "payment_service_failure": 0.0,
+        "memory_leak": 0.0,
+        "faulty_deployment": 0.0,
+        "message_queue_backlog": 0.0
+      },
+      "fit_seconds": 0.000737,
+      "score_seconds": 0.010775,
+      "inference_ms_per_1k": 5.3449
+    },
+    "isolation_forest": {
+      "precision": 0.9986449864498645,
+      "recall": 0.8318284424379232,
+      "f1": 0.9076354679802956,
+      "pr_auc": 0.9947827106392394,
+      "threshold": 0.08714432736438749,
+      "total_fault_events": 5,
+      "detected_fault_events": 5,
+      "mean_detection_delay_minutes": 9.8,
+      "per_fault_delays_minutes": [
+        0.0,
+        0.0,
+        48.0,
+        0.0,
+        1.0
+      ],
+      "false_positives_per_hour": 0.05309734513274337,
+      "true_positives": 737,
+      "false_positives": 1,
+      "true_negatives": 1129,
+      "false_negatives": 149,
+      "per_fault_delays_by_scenario": {
+        "db_connection_exhaustion": 0.0,
+        "payment_service_failure": 0.0,
+        "memory_leak": 48.0,
+        "faulty_deployment": 0.0,
+        "message_queue_backlog": 1.0
+      },
+      "fit_seconds": 0.665759,
+      "score_seconds": 0.075894,
+      "inference_ms_per_1k": 37.6457
+    },
+    "lstm_autoencoder": {
+      "precision": 1.0,
+      "recall": 0.8306997742663657,
+      "f1": 0.907521578298397,
+      "pr_auc": 0.992897247869687,
+      "threshold": 6.754018187522888,
+      "total_fault_events": 5,
+      "detected_fault_events": 5,
+      "mean_detection_delay_minutes": 29.6,
+      "per_fault_delays_minutes": [
+        0.0,
+        0.0,
+        148.0,
+        0.0,
+        0.0
+      ],
+      "false_positives_per_hour": 0.0,
+      "true_positives": 736,
+      "false_positives": 0,
+      "true_negatives": 1130,
+      "false_negatives": 150,
+      "per_fault_delays_by_scenario": {
+        "db_connection_exhaustion": 0.0,
+        "payment_service_failure": 0.0,
+        "memory_leak": 148.0,
+        "faulty_deployment": 0.0,
+        "message_queue_backlog": 0.0
+      },
+      "fit_seconds": 149.392165,
+      "score_seconds": 0.103834,
+      "inference_ms_per_1k": 51.505,
+      "epochs_trained": 25,
+      "best_epoch": 25,
+      "final_train_mse": 0.12827995361775202,
+      "best_internal_val_mse": 0.13302768626175102
+    }
+  }
+}

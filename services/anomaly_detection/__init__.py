@@ -9,6 +9,7 @@ from services.anomaly_detection.evaluation import (
     evaluate_predictions,
     find_fault_intervals,
 )
+from services.anomaly_detection.models import LSTMAutoencoderDetector
 from services.anomaly_detection.preprocessing import (
     ChronologicalSplit,
     MultivariatePreprocessor,
@@ -30,6 +31,7 @@ __all__ = [
     "FEATURE_COLUMNS",
     "FaultEvent",
     "IsolationForestDetector",
+    "LSTMAutoencoderDetector",
     "MultivariatePreprocessor",
     "RollingZScoreDetector",
     "SCENARIO_NAMES",

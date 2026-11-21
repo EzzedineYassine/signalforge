@@ -1,0 +1,12 @@
+{
+  "detector": "isolation_forest",
+  "format_version": 1,
+  "fitted_weights_saved": false,
+  "n_estimators": 200,
+  "contamination": "auto",
+  "max_samples": "auto",
+  "random_state": 42,
+  "n_jobs": 1,
+  "n_features": 7,
+  "threshold": 0.08714432736438749
+}
