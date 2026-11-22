@@ -1,19 +1,29 @@
 import { useCallback, useEffect, useState } from "react";
 import { Layout, type RoutePath } from "./components/Layout";
+import { InvestigationsPage } from "./pages/InvestigationsPage";
+import { KnowledgePage } from "./pages/KnowledgePage";
 import { OverviewPage } from "./pages/OverviewPage";
 import { ServicesPage } from "./pages/ServicesPage";
 import { TelemetryAnomaliesPage } from "./pages/TelemetryAnomaliesPage";
+import { TimelinePage } from "./pages/TimelinePage";
 import { ApiError, getHealth } from "./services/api";
 import type { HealthResponse } from "./types/api";
 
 function parseRoute(pathname: string): RoutePath {
-  if (pathname === "/services") {
-    return "/services";
+  switch (pathname) {
+    case "/services":
+      return "/services";
+    case "/telemetry":
+      return "/telemetry";
+    case "/timeline":
+      return "/timeline";
+    case "/knowledge":
+      return "/knowledge";
+    case "/investigations":
+      return "/investigations";
+    default:
+      return "/";
   }
-  if (pathname === "/telemetry") {
-    return "/telemetry";
-  }
-  return "/";
 }
 
 export function App() {
@@ -64,6 +74,9 @@ export function App() {
       {currentPath === "/" && <OverviewPage health={health} healthError={healthError} />}
       {currentPath === "/services" && <ServicesPage />}
       {currentPath === "/telemetry" && <TelemetryAnomaliesPage />}
+      {currentPath === "/timeline" && <TimelinePage />}
+      {currentPath === "/knowledge" && <KnowledgePage />}
+      {currentPath === "/investigations" && <InvestigationsPage />}
     </Layout>
   );
 }

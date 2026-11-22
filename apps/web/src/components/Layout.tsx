@@ -2,7 +2,13 @@ import type { ReactNode } from "react";
 import { API_BASE_URL } from "../services/api";
 import type { HealthResponse } from "../types/api";
 
-export type RoutePath = "/" | "/services" | "/telemetry";
+export type RoutePath =
+  | "/"
+  | "/services"
+  | "/telemetry"
+  | "/timeline"
+  | "/knowledge"
+  | "/investigations";
 
 interface NavItem {
   path: RoutePath;
@@ -14,6 +20,9 @@ const NAV_ITEMS: NavItem[] = [
   { path: "/", label: "Operations Overview", tag: "KPI" },
   { path: "/services", label: "Services & Dependencies", tag: "GRAPH" },
   { path: "/telemetry", label: "Telemetry & Anomalies", tag: "ML" },
+  { path: "/timeline", label: "Incident Timeline", tag: "CORR" },
+  { path: "/knowledge", label: "Knowledge Explorer", tag: "RAG" },
+  { path: "/investigations", label: "AI Investigations", tag: "AGENT" },
 ];
 
 interface LayoutProps {

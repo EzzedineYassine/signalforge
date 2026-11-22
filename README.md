@@ -2,15 +2,16 @@
 
 SignalForge is a local-first AI-powered IT Operations Intelligence Platform (AIOps) built in Python.
 
-**Current Status — Phases 1–6 (Foundation, Ingestion, Anomaly Detection, Hybrid RAG, Dependency Graph & Investigation Orchestration):**
+**Current Status — Phases 1–7 (Full Backend, ML Anomaly Detection, Hybrid RAG, Dependency Graph, LangGraph Investigations & React Console):**
 - PostgreSQL 16 schema managed via Alembic (`services`, `events`, `incidents`, `deployments`, `ingestion_failures`, `metric_points`, `trace_spans`, `anomalies`, `investigations`)
 - Qdrant vector store (`localhost:6333`) + JSON-persisted BM25 lexical index for hybrid operations knowledge retrieval
-- Structured JSON logging and environment-based configuration (including local Ollama settings)
+- Structured JSON logging and environment-based configuration (including local Ollama & explicit CORS settings)
 - Validation, UTC normalization, deterministic deduplication, and OTLP JSON parsing (`services/ingestion/`)
 - Multivariate anomaly detection (`services/anomaly_detection/`): leakage-free preprocessing, operational evaluation metrics, `RollingZScoreDetector`, `IsolationForestDetector`, and PyTorch CPU `LSTMAutoencoderDetector`
 - Hybrid knowledge retrieval & evaluation (`services/retrieval/`, `evaluation/retrieval/`): section-aware Markdown chunking, CPU `all-MiniLM-L6-v2` embeddings, Qdrant cosine search, BM25Okapi keyword search, Reciprocal Rank Fusion (RRF), and reproducible retrieval benchmark
 - Service dependency graph & multi-signal incident correlation (`services/graph/`): NetworkX directed topology derived from parent/child `trace_spans`, cycle-safe multi-hop impact traversal, and chronological deployment/anomaly/event/incident timeline correlation
 - Bounded LangGraph incident investigation workflow (`services/investigation/`): replaceable Ollama structured-output client (`num_ctx=8192`), deterministic evidence collection + hybrid RAG retrieval, zero-evidence abstention short-circuit, deterministic citation/evidence validation, graceful LLM-failure fallback, and PostgreSQL persistence
+- React + TypeScript + Vite + Recharts engineering console (`apps/web/`): Operations Overview, Services & Dependencies, Telemetry & Anomalies, Incident Timeline, Knowledge Explorer, and AI Investigation Workspace
 - FastAPI HTTP API:
   - `GET /health`
   - `POST /api/v1/events/ingest`, `GET /api/v1/events`
@@ -208,6 +209,30 @@ Invoke-RestMethod "http://127.0.0.1:8000/api/v1/investigations?service=checkout-
 
 # Fetch a single persisted investigation by UUID
 Invoke-RestMethod "http://127.0.0.1:8000/api/v1/investigations/<investigation_id>"
+```
+
+## Phase 7: React + TypeScript Operations Console & Demo Scenario
+
+Start the FastAPI backend (`http://127.0.0.1:8000`), optionally seed the idempotent **synthetic** e-commerce incident demo scenario (traces, metrics, LSTM anomalies, deployment, error events, open incident, and Qdrant KB index), and launch the Vite frontend (`http://127.0.0.1:5173`):
+
+```powershell
+# 1. Seed the idempotent synthetic demo scenario into PostgreSQL + Qdrant
+.venv\Scripts\python scripts/seed_demo_scenario.py
+
+# 2. Start the backend API (in terminal 1)
+.venv\Scripts\uvicorn apps.api.src.main:app --reload
+
+# 3. Install and start the React + TypeScript + Recharts console (in terminal 2)
+cd apps/web
+npm install
+npm run dev
+```
+
+Frontend verification commands (inside `apps/web/`):
+
+```powershell
+npx tsc --noEmit
+npm run build
 ```
 
 ## Linting & Tests
