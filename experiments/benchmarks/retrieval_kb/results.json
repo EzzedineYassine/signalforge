@@ -1,0 +1,1637 @@
+{
+  "is_synthetic_corpus": true,
+  "corpus_source": "data/synthetic/knowledge_base",
+  "queries_file": "evaluation/retrieval/benchmark_queries.json",
+  "documents_indexed": 37,
+  "chunks_indexed": 143,
+  "chunking": {
+    "max_chars": 1200,
+    "overlap_chars": 150
+  },
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "embedding_dimension": 384,
+  "device": "cpu",
+  "qdrant_collection_temporary": "signalforge_knowledge_bench",
+  "top_k": 10,
+  "rrf_k": 60,
+  "num_queries": 24,
+  "index_seconds": 72.1851,
+  "modes": {
+    "bm25": {
+      "mode": "bm25",
+      "num_queries": 24,
+      "top_k": 10,
+      "recall_at_5": 0.986111,
+      "mrr_at_10": 0.951389,
+      "ndcg_at_10": 0.938352,
+      "citation_completeness": 1.0,
+      "p50_latency_ms": 3.1526,
+      "p95_latency_ms": 7.5699,
+      "per_category": {
+        "conceptual_symptom": {
+          "num_queries": 8.0,
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.854167,
+          "ndcg_at_10": 0.851022
+        },
+        "exact_lookup": {
+          "num_queries": 8.0,
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        "multi_service_incident": {
+          "num_queries": 8.0,
+          "recall_at_5": 0.958333,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.964033
+        }
+      },
+      "per_query": [
+        {
+          "query_id": "q-01",
+          "category": "exact_lookup",
+          "query": "SQLSTATE 40P01 deadlock_detected on order_items and inventory_skus",
+          "expected_doc_ids": [
+            "rb-012",
+            "dep-2026-005"
+          ],
+          "retrieved_doc_ids": [
+            "rb-012",
+            "dep-2026-005",
+            "inc-2026-001",
+            "rb-005",
+            "inc-2026-007"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 1.4797
+        },
+        {
+          "query_id": "q-02",
+          "category": "exact_lookup",
+          "query": "ERR_CERT_DATE_INVALID tls_handshake_error openssl s_client",
+          "expected_doc_ids": [
+            "rb-009",
+            "inc-2026-010"
+          ],
+          "retrieved_doc_ids": [
+            "rb-009",
+            "inc-2026-010",
+            "rb-003",
+            "inc-2026-005",
+            "rb-005"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 2.7191
+        },
+        {
+          "query_id": "q-03",
+          "category": "exact_lookup",
+          "query": "checkout-service v2.4.0 shipping_country_code regression rollback",
+          "expected_doc_ids": [
+            "dep-2026-002",
+            "inc-2026-006",
+            "dep-2026-003"
+          ],
+          "retrieved_doc_ids": [
+            "dep-2026-003",
+            "inc-2026-006",
+            "dep-2026-002",
+            "rb-006"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 4.1842
+        },
+        {
+          "query_id": "q-04",
+          "category": "exact_lookup",
+          "query": "pg_stat_replication pg_wal_lsn_diff replay_lag_bytes",
+          "expected_doc_ids": [
+            "rb-013"
+          ],
+          "retrieved_doc_ids": [
+            "rb-013",
+            "rb-002",
+            "rb-014",
+            "dep-2026-006",
+            "rb-007"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 6.5489
+        },
+        {
+          "query_id": "q-05",
+          "category": "exact_lookup",
+          "query": "autovacuum_vacuum_scale_factor n_dead_tup pg_stat_user_tables",
+          "expected_doc_ids": [
+            "rb-014",
+            "dep-2026-006"
+          ],
+          "retrieved_doc_ids": [
+            "rb-014",
+            "dep-2026-006",
+            "rb-013",
+            "rb-002",
+            "rb-007"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 1.2612
+        },
+        {
+          "query_id": "q-06",
+          "category": "exact_lookup",
+          "query": "circuit_breaker_state=OPEN HTTP 503 checkout-service",
+          "expected_doc_ids": [
+            "rb-010"
+          ],
+          "retrieved_doc_ids": [
+            "rb-010",
+            "arch-001",
+            "rb-003",
+            "inc-2026-003",
+            "rb-002",
+            "rb-011"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 3.6415
+        },
+        {
+          "query_id": "q-07",
+          "category": "exact_lookup",
+          "query": "HTTP 409 idempotency_key_mismatch double charge prevention",
+          "expected_doc_ids": [
+            "rb-011"
+          ],
+          "retrieved_doc_ids": [
+            "rb-011",
+            "arch-003",
+            "inc-2026-003",
+            "arch-002",
+            "rb-006",
+            "rb-003"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 4.6063
+        },
+        {
+          "query_id": "q-08",
+          "category": "exact_lookup",
+          "query": "idle_in_transaction_session_timeout pg_terminate_backend PgBouncer",
+          "expected_doc_ids": [
+            "rb-002",
+            "arch-004",
+            "dep-2026-006"
+          ],
+          "retrieved_doc_ids": [
+            "rb-002",
+            "dep-2026-006",
+            "arch-004",
+            "inc-2026-002"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 5.8402
+        },
+        {
+          "query_id": "q-09",
+          "category": "conceptual_symptom",
+          "query": "How should on-call responders handle a gradual memory climb ending in container restarts?",
+          "expected_doc_ids": [
+            "rb-004",
+            "inc-2026-004"
+          ],
+          "retrieved_doc_ids": [
+            "rb-004",
+            "inc-2026-002",
+            "inc-2026-004",
+            "rb-005",
+            "rb-014"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.919721,
+          "citation_completeness": 1.0,
+          "latency_ms": 7.7566
+        },
+        {
+          "query_id": "q-10",
+          "category": "conceptual_symptom",
+          "query": "Card transactions are failing with upstream timeouts \u2014 how do we switch payment processors?",
+          "expected_doc_ids": [
+            "rb-003",
+            "arch-003",
+            "inc-2026-003"
+          ],
+          "retrieved_doc_ids": [
+            "rb-003",
+            "arch-003",
+            "rb-005",
+            "inc-2026-003",
+            "rb-001"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.967468,
+          "citation_completeness": 1.0,
+          "latency_ms": 3.1172
+        },
+        {
+          "query_id": "q-11",
+          "category": "conceptual_symptom",
+          "query": "Requests slow down between internal services even though backend CPU looks healthy",
+          "expected_doc_ids": [
+            "rb-005",
+            "inc-2026-005"
+          ],
+          "retrieved_doc_ids": [
+            "rb-015",
+            "rb-005",
+            "rb-001",
+            "inc-2026-005",
+            "rb-003",
+            "rb-009",
+            "rb-008"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.5,
+          "ndcg_at_10": 0.650921,
+          "citation_completeness": 1.0,
+          "latency_ms": 1.0823
+        },
+        {
+          "query_id": "q-12",
+          "category": "conceptual_symptom",
+          "query": "Customers are experiencing slow checkouts during a high-traffic flash sale with maxed processor cores",
+          "expected_doc_ids": [
+            "rb-001",
+            "inc-2026-001"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-001",
+            "dep-2026-006",
+            "rb-004",
+            "rb-003",
+            "rb-001",
+            "inc-2026-003",
+            "rb-014",
+            "arch-003"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.850345,
+          "citation_completeness": 1.0,
+          "latency_ms": 7.7501
+        },
+        {
+          "query_id": "q-13",
+          "category": "conceptual_symptom",
+          "query": "Which low-priority endpoints should we shed first during an extreme traffic spike?",
+          "expected_doc_ids": [
+            "rb-008"
+          ],
+          "retrieved_doc_ids": [
+            "rb-008",
+            "inc-2026-005",
+            "dep-2026-006",
+            "arch-001",
+            "rb-010",
+            "inc-2026-001",
+            "rb-001"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 4.9722
+        },
+        {
+          "query_id": "q-14",
+          "category": "conceptual_symptom",
+          "query": "How do we detect a bad software release immediately after rollout and revert safely?",
+          "expected_doc_ids": [
+            "rb-006",
+            "inc-2026-006"
+          ],
+          "retrieved_doc_ids": [
+            "rb-006",
+            "rb-004",
+            "inc-2026-006",
+            "rb-003",
+            "inc-2026-009",
+            "rb-002",
+            "arch-003"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.919721,
+          "citation_completeness": 1.0,
+          "latency_ms": 4.3716
+        },
+        {
+          "query_id": "q-15",
+          "category": "conceptual_symptom",
+          "query": "Workers keep dropping partition assignments and spending all their time coordinating instead of processing messages",
+          "expected_doc_ids": [
+            "rb-015"
+          ],
+          "retrieved_doc_ids": [
+            "rb-015",
+            "inc-2026-006",
+            "rb-005",
+            "rb-004",
+            "rb-007",
+            "rb-009",
+            "inc-2026-007"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 3.188
+        },
+        {
+          "query_id": "q-16",
+          "category": "conceptual_symptom",
+          "query": "Why did a table schema change block queries and make the database unresponsive?",
+          "expected_doc_ids": [
+            "inc-2026-009"
+          ],
+          "retrieved_doc_ids": [
+            "rb-006",
+            "rb-014",
+            "inc-2026-009",
+            "rb-013",
+            "arch-004",
+            "rb-002"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.333333,
+          "ndcg_at_10": 0.5,
+          "citation_completeness": 1.0,
+          "latency_ms": 2.6221
+        },
+        {
+          "query_id": "q-17",
+          "category": "multi_service_incident",
+          "query": "postgres-primary database connection pool exhaustion impacting order-service and checkout-service",
+          "expected_doc_ids": [
+            "rb-002",
+            "inc-2026-002",
+            "arch-004"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-002",
+            "rb-002",
+            "arch-004",
+            "dep-2026-006"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 2.9352
+        },
+        {
+          "query_id": "q-18",
+          "category": "multi_service_incident",
+          "query": "kafka-broker order-events consumer backlog and dead letter queue remediation for delayed confirmations",
+          "expected_doc_ids": [
+            "rb-007",
+            "inc-2026-007",
+            "arch-005"
+          ],
+          "retrieved_doc_ids": [
+            "rb-007",
+            "inc-2026-007",
+            "arch-005"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 1.2351
+        },
+        {
+          "query_id": "q-19",
+          "category": "multi_service_incident",
+          "query": "payment-service webhook retry storm exhausting database connections and async Kafka queue fix",
+          "expected_doc_ids": [
+            "inc-2026-008",
+            "dep-2026-004",
+            "arch-005"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-008",
+            "dep-2026-004",
+            "inc-2026-009",
+            "rb-007"
+          ],
+          "recall_at_5": 0.666667,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.765361,
+          "citation_completeness": 1.0,
+          "latency_ms": 2.9302
+        },
+        {
+          "query_id": "q-20",
+          "category": "multi_service_incident",
+          "query": "api-gateway east-west latency spike from keep-alive exhaustion and v3.2.1 hardening deployment",
+          "expected_doc_ids": [
+            "inc-2026-005",
+            "dep-2026-001",
+            "rb-005"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-005",
+            "dep-2026-001",
+            "rb-005"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 3.4396
+        },
+        {
+          "query_id": "q-21",
+          "category": "multi_service_incident",
+          "query": "order-service unbounded cache OOMKilled leak and v4.1.2 bounded cache fix",
+          "expected_doc_ids": [
+            "inc-2026-004",
+            "dep-2026-005",
+            "rb-004"
+          ],
+          "retrieved_doc_ids": [
+            "dep-2026-005",
+            "inc-2026-004",
+            "rb-004"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 2.5241
+        },
+        {
+          "query_id": "q-22",
+          "category": "multi_service_incident",
+          "query": "synchronous request path from api-gateway through checkout-service to order-service and payment-service",
+          "expected_doc_ids": [
+            "arch-001",
+            "arch-002"
+          ],
+          "retrieved_doc_ids": [
+            "arch-001",
+            "arch-002",
+            "inc-2026-005",
+            "rb-005",
+            "rb-001",
+            "inc-2026-003"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 3.5362
+        },
+        {
+          "query_id": "q-23",
+          "category": "multi_service_incident",
+          "query": "checkout-service payment-service failover between stripe-eu and adyen-eu with circuit breaker",
+          "expected_doc_ids": [
+            "arch-003",
+            "rb-003",
+            "rb-010"
+          ],
+          "retrieved_doc_ids": [
+            "rb-003",
+            "arch-003",
+            "inc-2026-003",
+            "dep-2026-004",
+            "rb-010"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.946902,
+          "citation_completeness": 1.0,
+          "latency_ms": 2.5938
+        },
+        {
+          "query_id": "q-24",
+          "category": "multi_service_incident",
+          "query": "OpenTelemetry trace_id span_id propagation and 7-metric telemetry contract across services",
+          "expected_doc_ids": [
+            "arch-006",
+            "arch-002"
+          ],
+          "retrieved_doc_ids": [
+            "arch-006",
+            "arch-002",
+            "rb-011",
+            "rb-010",
+            "rb-005",
+            "rb-001",
+            "arch-003",
+            "inc-2026-004"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 2.1589
+        }
+      ]
+    },
+    "dense": {
+      "mode": "dense",
+      "num_queries": 24,
+      "top_k": 10,
+      "recall_at_5": 0.965278,
+      "mrr_at_10": 0.979167,
+      "ndcg_at_10": 0.954026,
+      "citation_completeness": 1.0,
+      "p50_latency_ms": 52.6317,
+      "p95_latency_ms": 123.309,
+      "per_category": {
+        "conceptual_symptom": {
+          "num_queries": 8.0,
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.9375,
+          "ndcg_at_10": 0.943831
+        },
+        "exact_lookup": {
+          "num_queries": 8.0,
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.995934
+        },
+        "multi_service_incident": {
+          "num_queries": 8.0,
+          "recall_at_5": 0.895833,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.922314
+        }
+      },
+      "per_query": [
+        {
+          "query_id": "q-01",
+          "category": "exact_lookup",
+          "query": "SQLSTATE 40P01 deadlock_detected on order_items and inventory_skus",
+          "expected_doc_ids": [
+            "rb-012",
+            "dep-2026-005"
+          ],
+          "retrieved_doc_ids": [
+            "rb-012",
+            "dep-2026-005",
+            "inc-2026-004"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 51.4604
+        },
+        {
+          "query_id": "q-02",
+          "category": "exact_lookup",
+          "query": "ERR_CERT_DATE_INVALID tls_handshake_error openssl s_client",
+          "expected_doc_ids": [
+            "rb-009",
+            "inc-2026-010"
+          ],
+          "retrieved_doc_ids": [
+            "rb-009",
+            "inc-2026-010",
+            "arch-001",
+            "dep-2026-001",
+            "inc-2026-005"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 131.4083
+        },
+        {
+          "query_id": "q-03",
+          "category": "exact_lookup",
+          "query": "checkout-service v2.4.0 shipping_country_code regression rollback",
+          "expected_doc_ids": [
+            "dep-2026-002",
+            "inc-2026-006",
+            "dep-2026-003"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-006",
+            "dep-2026-002",
+            "dep-2026-003",
+            "rb-006"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 113.9741
+        },
+        {
+          "query_id": "q-04",
+          "category": "exact_lookup",
+          "query": "pg_stat_replication pg_wal_lsn_diff replay_lag_bytes",
+          "expected_doc_ids": [
+            "rb-013"
+          ],
+          "retrieved_doc_ids": [
+            "rb-013",
+            "arch-004",
+            "rb-001",
+            "dep-2026-006",
+            "rb-007"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 76.9718
+        },
+        {
+          "query_id": "q-05",
+          "category": "exact_lookup",
+          "query": "autovacuum_vacuum_scale_factor n_dead_tup pg_stat_user_tables",
+          "expected_doc_ids": [
+            "rb-014",
+            "dep-2026-006"
+          ],
+          "retrieved_doc_ids": [
+            "rb-014",
+            "dep-2026-006",
+            "rb-002",
+            "inc-2026-002"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 103.2784
+        },
+        {
+          "query_id": "q-06",
+          "category": "exact_lookup",
+          "query": "circuit_breaker_state=OPEN HTTP 503 checkout-service",
+          "expected_doc_ids": [
+            "rb-010"
+          ],
+          "retrieved_doc_ids": [
+            "rb-010",
+            "arch-001",
+            "inc-2026-003",
+            "rb-001",
+            "inc-2026-006",
+            "inc-2026-001"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 124.9563
+        },
+        {
+          "query_id": "q-07",
+          "category": "exact_lookup",
+          "query": "HTTP 409 idempotency_key_mismatch double charge prevention",
+          "expected_doc_ids": [
+            "rb-011"
+          ],
+          "retrieved_doc_ids": [
+            "rb-011",
+            "inc-2026-003",
+            "arch-003",
+            "inc-2026-010",
+            "inc-2026-005",
+            "inc-2026-001",
+            "rb-003"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 49.5624
+        },
+        {
+          "query_id": "q-08",
+          "category": "exact_lookup",
+          "query": "idle_in_transaction_session_timeout pg_terminate_backend PgBouncer",
+          "expected_doc_ids": [
+            "rb-002",
+            "arch-004",
+            "dep-2026-006"
+          ],
+          "retrieved_doc_ids": [
+            "dep-2026-006",
+            "rb-002",
+            "inc-2026-002",
+            "arch-004"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.967468,
+          "citation_completeness": 1.0,
+          "latency_ms": 70.0252
+        },
+        {
+          "query_id": "q-09",
+          "category": "conceptual_symptom",
+          "query": "How should on-call responders handle a gradual memory climb ending in container restarts?",
+          "expected_doc_ids": [
+            "rb-004",
+            "inc-2026-004"
+          ],
+          "retrieved_doc_ids": [
+            "rb-004",
+            "inc-2026-004",
+            "dep-2026-005",
+            "rb-013"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 55.38
+        },
+        {
+          "query_id": "q-10",
+          "category": "conceptual_symptom",
+          "query": "Card transactions are failing with upstream timeouts \u2014 how do we switch payment processors?",
+          "expected_doc_ids": [
+            "rb-003",
+            "arch-003",
+            "inc-2026-003"
+          ],
+          "retrieved_doc_ids": [
+            "rb-003",
+            "inc-2026-003",
+            "arch-003",
+            "rb-005",
+            "rb-001"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 51.4943
+        },
+        {
+          "query_id": "q-11",
+          "category": "conceptual_symptom",
+          "query": "Requests slow down between internal services even though backend CPU looks healthy",
+          "expected_doc_ids": [
+            "rb-005",
+            "inc-2026-005"
+          ],
+          "retrieved_doc_ids": [
+            "rb-005",
+            "rb-001",
+            "inc-2026-005",
+            "rb-008",
+            "rb-013"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.919721,
+          "citation_completeness": 1.0,
+          "latency_ms": 50.9475
+        },
+        {
+          "query_id": "q-12",
+          "category": "conceptual_symptom",
+          "query": "Customers are experiencing slow checkouts during a high-traffic flash sale with maxed processor cores",
+          "expected_doc_ids": [
+            "rb-001",
+            "inc-2026-001"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-001",
+            "rb-001",
+            "rb-007",
+            "rb-005"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 45.9692
+        },
+        {
+          "query_id": "q-13",
+          "category": "conceptual_symptom",
+          "query": "Which low-priority endpoints should we shed first during an extreme traffic spike?",
+          "expected_doc_ids": [
+            "rb-008"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-005",
+            "rb-008",
+            "rb-001",
+            "rb-005",
+            "rb-007"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.5,
+          "ndcg_at_10": 0.63093,
+          "citation_completeness": 1.0,
+          "latency_ms": 53.769
+        },
+        {
+          "query_id": "q-14",
+          "category": "conceptual_symptom",
+          "query": "How do we detect a bad software release immediately after rollout and revert safely?",
+          "expected_doc_ids": [
+            "rb-006",
+            "inc-2026-006"
+          ],
+          "retrieved_doc_ids": [
+            "rb-006",
+            "inc-2026-006",
+            "dep-2026-002",
+            "rb-004"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 48.1932
+        },
+        {
+          "query_id": "q-15",
+          "category": "conceptual_symptom",
+          "query": "Workers keep dropping partition assignments and spending all their time coordinating instead of processing messages",
+          "expected_doc_ids": [
+            "rb-015"
+          ],
+          "retrieved_doc_ids": [
+            "rb-015",
+            "rb-007",
+            "rb-004",
+            "arch-005",
+            "inc-2026-002",
+            "rb-001"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 62.2219
+        },
+        {
+          "query_id": "q-16",
+          "category": "conceptual_symptom",
+          "query": "Why did a table schema change block queries and make the database unresponsive?",
+          "expected_doc_ids": [
+            "inc-2026-009"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-009",
+            "rb-014",
+            "rb-007",
+            "rb-002",
+            "arch-004",
+            "rb-012"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 36.4374
+        },
+        {
+          "query_id": "q-17",
+          "category": "multi_service_incident",
+          "query": "postgres-primary database connection pool exhaustion impacting order-service and checkout-service",
+          "expected_doc_ids": [
+            "rb-002",
+            "inc-2026-002",
+            "arch-004"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-002",
+            "rb-002",
+            "arch-004"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 39.562
+        },
+        {
+          "query_id": "q-18",
+          "category": "multi_service_incident",
+          "query": "kafka-broker order-events consumer backlog and dead letter queue remediation for delayed confirmations",
+          "expected_doc_ids": [
+            "rb-007",
+            "inc-2026-007",
+            "arch-005"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-007",
+            "rb-007",
+            "arch-005",
+            "rb-015"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 37.6722
+        },
+        {
+          "query_id": "q-19",
+          "category": "multi_service_incident",
+          "query": "payment-service webhook retry storm exhausting database connections and async Kafka queue fix",
+          "expected_doc_ids": [
+            "inc-2026-008",
+            "dep-2026-004",
+            "arch-005"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-008",
+            "dep-2026-004",
+            "arch-003",
+            "rb-007",
+            "rb-015"
+          ],
+          "recall_at_5": 0.666667,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.765361,
+          "citation_completeness": 1.0,
+          "latency_ms": 56.6155
+        },
+        {
+          "query_id": "q-20",
+          "category": "multi_service_incident",
+          "query": "api-gateway east-west latency spike from keep-alive exhaustion and v3.2.1 hardening deployment",
+          "expected_doc_ids": [
+            "inc-2026-005",
+            "dep-2026-001",
+            "rb-005"
+          ],
+          "retrieved_doc_ids": [
+            "dep-2026-001",
+            "rb-005",
+            "inc-2026-005"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 41.0081
+        },
+        {
+          "query_id": "q-21",
+          "category": "multi_service_incident",
+          "query": "order-service unbounded cache OOMKilled leak and v4.1.2 bounded cache fix",
+          "expected_doc_ids": [
+            "inc-2026-004",
+            "dep-2026-005",
+            "rb-004"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-004",
+            "dep-2026-005",
+            "rb-004",
+            "rb-012"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 57.7504
+        },
+        {
+          "query_id": "q-22",
+          "category": "multi_service_incident",
+          "query": "synchronous request path from api-gateway through checkout-service to order-service and payment-service",
+          "expected_doc_ids": [
+            "arch-001",
+            "arch-002"
+          ],
+          "retrieved_doc_ids": [
+            "arch-001",
+            "arch-002",
+            "rb-009",
+            "rb-010"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 62.2441
+        },
+        {
+          "query_id": "q-23",
+          "category": "multi_service_incident",
+          "query": "checkout-service payment-service failover between stripe-eu and adyen-eu with circuit breaker",
+          "expected_doc_ids": [
+            "arch-003",
+            "rb-003",
+            "rb-010"
+          ],
+          "retrieved_doc_ids": [
+            "rb-003",
+            "rb-010",
+            "arch-003",
+            "inc-2026-003"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 47.7341
+        },
+        {
+          "query_id": "q-24",
+          "category": "multi_service_incident",
+          "query": "OpenTelemetry trace_id span_id propagation and 7-metric telemetry contract across services",
+          "expected_doc_ids": [
+            "arch-006",
+            "arch-002"
+          ],
+          "retrieved_doc_ids": [
+            "arch-006",
+            "rb-001",
+            "rb-011",
+            "inc-2026-005",
+            "rb-005",
+            "rb-003"
+          ],
+          "recall_at_5": 0.5,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.613147,
+          "citation_completeness": 1.0,
+          "latency_ms": 44.469
+        }
+      ]
+    },
+    "hybrid": {
+      "mode": "hybrid",
+      "num_queries": 24,
+      "top_k": 10,
+      "recall_at_5": 0.986111,
+      "mrr_at_10": 0.979167,
+      "ndcg_at_10": 0.967254,
+      "citation_completeness": 1.0,
+      "p50_latency_ms": 53.6556,
+      "p95_latency_ms": 70.0192,
+      "per_category": {
+        "conceptual_symptom": {
+          "num_queries": 8.0,
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.9375,
+          "ndcg_at_10": 0.953866
+        },
+        "exact_lookup": {
+          "num_queries": 8.0,
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        "multi_service_incident": {
+          "num_queries": 8.0,
+          "recall_at_5": 0.958333,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.947897
+        }
+      },
+      "per_query": [
+        {
+          "query_id": "q-01",
+          "category": "exact_lookup",
+          "query": "SQLSTATE 40P01 deadlock_detected on order_items and inventory_skus",
+          "expected_doc_ids": [
+            "rb-012",
+            "dep-2026-005"
+          ],
+          "retrieved_doc_ids": [
+            "rb-012",
+            "dep-2026-005",
+            "inc-2026-009",
+            "inc-2026-004"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 43.6898
+        },
+        {
+          "query_id": "q-02",
+          "category": "exact_lookup",
+          "query": "ERR_CERT_DATE_INVALID tls_handshake_error openssl s_client",
+          "expected_doc_ids": [
+            "rb-009",
+            "inc-2026-010"
+          ],
+          "retrieved_doc_ids": [
+            "rb-009",
+            "inc-2026-010",
+            "inc-2026-005",
+            "rb-003",
+            "arch-001"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 60.7124
+        },
+        {
+          "query_id": "q-03",
+          "category": "exact_lookup",
+          "query": "checkout-service v2.4.0 shipping_country_code regression rollback",
+          "expected_doc_ids": [
+            "dep-2026-002",
+            "inc-2026-006",
+            "dep-2026-003"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-006",
+            "dep-2026-002",
+            "dep-2026-003",
+            "rb-006"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 73.4821
+        },
+        {
+          "query_id": "q-04",
+          "category": "exact_lookup",
+          "query": "pg_stat_replication pg_wal_lsn_diff replay_lag_bytes",
+          "expected_doc_ids": [
+            "rb-013"
+          ],
+          "retrieved_doc_ids": [
+            "rb-013",
+            "dep-2026-006",
+            "rb-007",
+            "rb-002",
+            "rb-014"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 66.0238
+        },
+        {
+          "query_id": "q-05",
+          "category": "exact_lookup",
+          "query": "autovacuum_vacuum_scale_factor n_dead_tup pg_stat_user_tables",
+          "expected_doc_ids": [
+            "rb-014",
+            "dep-2026-006"
+          ],
+          "retrieved_doc_ids": [
+            "rb-014",
+            "dep-2026-006",
+            "rb-002",
+            "rb-001"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 63.9267
+        },
+        {
+          "query_id": "q-06",
+          "category": "exact_lookup",
+          "query": "circuit_breaker_state=OPEN HTTP 503 checkout-service",
+          "expected_doc_ids": [
+            "rb-010"
+          ],
+          "retrieved_doc_ids": [
+            "rb-010",
+            "arch-001",
+            "inc-2026-003",
+            "rb-003",
+            "inc-2026-001",
+            "dep-2026-003"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 61.0746
+        },
+        {
+          "query_id": "q-07",
+          "category": "exact_lookup",
+          "query": "HTTP 409 idempotency_key_mismatch double charge prevention",
+          "expected_doc_ids": [
+            "rb-011"
+          ],
+          "retrieved_doc_ids": [
+            "rb-011",
+            "arch-003",
+            "inc-2026-003",
+            "rb-003",
+            "dep-2026-004",
+            "inc-2026-006",
+            "rb-006"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 56.6851
+        },
+        {
+          "query_id": "q-08",
+          "category": "exact_lookup",
+          "query": "idle_in_transaction_session_timeout pg_terminate_backend PgBouncer",
+          "expected_doc_ids": [
+            "rb-002",
+            "arch-004",
+            "dep-2026-006"
+          ],
+          "retrieved_doc_ids": [
+            "dep-2026-006",
+            "rb-002",
+            "arch-004",
+            "inc-2026-002"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 55.067
+        },
+        {
+          "query_id": "q-09",
+          "category": "conceptual_symptom",
+          "query": "How should on-call responders handle a gradual memory climb ending in container restarts?",
+          "expected_doc_ids": [
+            "rb-004",
+            "inc-2026-004"
+          ],
+          "retrieved_doc_ids": [
+            "rb-004",
+            "inc-2026-004",
+            "inc-2026-005",
+            "rb-007"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 54.4218
+        },
+        {
+          "query_id": "q-10",
+          "category": "conceptual_symptom",
+          "query": "Card transactions are failing with upstream timeouts \u2014 how do we switch payment processors?",
+          "expected_doc_ids": [
+            "rb-003",
+            "arch-003",
+            "inc-2026-003"
+          ],
+          "retrieved_doc_ids": [
+            "rb-003",
+            "inc-2026-003",
+            "arch-003",
+            "rb-005",
+            "inc-2026-005"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 46.5166
+        },
+        {
+          "query_id": "q-11",
+          "category": "conceptual_symptom",
+          "query": "Requests slow down between internal services even though backend CPU looks healthy",
+          "expected_doc_ids": [
+            "rb-005",
+            "inc-2026-005"
+          ],
+          "retrieved_doc_ids": [
+            "rb-005",
+            "inc-2026-005",
+            "rb-008",
+            "rb-001"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 52.5463
+        },
+        {
+          "query_id": "q-12",
+          "category": "conceptual_symptom",
+          "query": "Customers are experiencing slow checkouts during a high-traffic flash sale with maxed processor cores",
+          "expected_doc_ids": [
+            "rb-001",
+            "inc-2026-001"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-001",
+            "rb-001",
+            "rb-003",
+            "rb-004",
+            "rb-005",
+            "arch-003",
+            "rb-015"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 54.6799
+        },
+        {
+          "query_id": "q-13",
+          "category": "conceptual_symptom",
+          "query": "Which low-priority endpoints should we shed first during an extreme traffic spike?",
+          "expected_doc_ids": [
+            "rb-008"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-005",
+            "rb-008",
+            "rb-001",
+            "dep-2026-006",
+            "rb-004",
+            "inc-2026-001"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 0.5,
+          "ndcg_at_10": 0.63093,
+          "citation_completeness": 1.0,
+          "latency_ms": 47.4158
+        },
+        {
+          "query_id": "q-14",
+          "category": "conceptual_symptom",
+          "query": "How do we detect a bad software release immediately after rollout and revert safely?",
+          "expected_doc_ids": [
+            "rb-006",
+            "inc-2026-006"
+          ],
+          "retrieved_doc_ids": [
+            "rb-006",
+            "inc-2026-006",
+            "rb-004",
+            "rb-003",
+            "dep-2026-002"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 51.0174
+        },
+        {
+          "query_id": "q-15",
+          "category": "conceptual_symptom",
+          "query": "Workers keep dropping partition assignments and spending all their time coordinating instead of processing messages",
+          "expected_doc_ids": [
+            "rb-015"
+          ],
+          "retrieved_doc_ids": [
+            "rb-015",
+            "rb-007",
+            "rb-004",
+            "rb-005",
+            "arch-005",
+            "inc-2026-007",
+            "rb-003"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 48.0541
+        },
+        {
+          "query_id": "q-16",
+          "category": "conceptual_symptom",
+          "query": "Why did a table schema change block queries and make the database unresponsive?",
+          "expected_doc_ids": [
+            "inc-2026-009"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-009",
+            "rb-014",
+            "rb-002",
+            "arch-004",
+            "rb-012"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 49.0065
+        },
+        {
+          "query_id": "q-17",
+          "category": "multi_service_incident",
+          "query": "postgres-primary database connection pool exhaustion impacting order-service and checkout-service",
+          "expected_doc_ids": [
+            "rb-002",
+            "inc-2026-002",
+            "arch-004"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-002",
+            "rb-002",
+            "arch-004",
+            "dep-2026-006"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 59.3114
+        },
+        {
+          "query_id": "q-18",
+          "category": "multi_service_incident",
+          "query": "kafka-broker order-events consumer backlog and dead letter queue remediation for delayed confirmations",
+          "expected_doc_ids": [
+            "rb-007",
+            "inc-2026-007",
+            "arch-005"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-007",
+            "rb-007",
+            "arch-005",
+            "rb-015"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 51.2066
+        },
+        {
+          "query_id": "q-19",
+          "category": "multi_service_incident",
+          "query": "payment-service webhook retry storm exhausting database connections and async Kafka queue fix",
+          "expected_doc_ids": [
+            "inc-2026-008",
+            "dep-2026-004",
+            "arch-005"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-008",
+            "dep-2026-004",
+            "rb-007",
+            "arch-003"
+          ],
+          "recall_at_5": 0.666667,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.765361,
+          "citation_completeness": 1.0,
+          "latency_ms": 47.9913
+        },
+        {
+          "query_id": "q-20",
+          "category": "multi_service_incident",
+          "query": "api-gateway east-west latency spike from keep-alive exhaustion and v3.2.1 hardening deployment",
+          "expected_doc_ids": [
+            "inc-2026-005",
+            "dep-2026-001",
+            "rb-005"
+          ],
+          "retrieved_doc_ids": [
+            "inc-2026-005",
+            "dep-2026-001",
+            "rb-005"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 52.8893
+        },
+        {
+          "query_id": "q-21",
+          "category": "multi_service_incident",
+          "query": "order-service unbounded cache OOMKilled leak and v4.1.2 bounded cache fix",
+          "expected_doc_ids": [
+            "inc-2026-004",
+            "dep-2026-005",
+            "rb-004"
+          ],
+          "retrieved_doc_ids": [
+            "dep-2026-005",
+            "inc-2026-004",
+            "rb-004"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 55.8621
+        },
+        {
+          "query_id": "q-22",
+          "category": "multi_service_incident",
+          "query": "synchronous request path from api-gateway through checkout-service to order-service and payment-service",
+          "expected_doc_ids": [
+            "arch-001",
+            "arch-002"
+          ],
+          "retrieved_doc_ids": [
+            "arch-001",
+            "arch-002",
+            "rb-010",
+            "inc-2026-005",
+            "rb-005",
+            "rb-011"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0,
+          "citation_completeness": 1.0,
+          "latency_ms": 44.8831
+        },
+        {
+          "query_id": "q-23",
+          "category": "multi_service_incident",
+          "query": "checkout-service payment-service failover between stripe-eu and adyen-eu with circuit breaker",
+          "expected_doc_ids": [
+            "arch-003",
+            "rb-003",
+            "rb-010"
+          ],
+          "retrieved_doc_ids": [
+            "rb-003",
+            "arch-003",
+            "inc-2026-003",
+            "rb-010",
+            "dep-2026-004"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.967468,
+          "citation_completeness": 1.0,
+          "latency_ms": 49.5728
+        },
+        {
+          "query_id": "q-24",
+          "category": "multi_service_incident",
+          "query": "OpenTelemetry trace_id span_id propagation and 7-metric telemetry contract across services",
+          "expected_doc_ids": [
+            "arch-006",
+            "arch-002"
+          ],
+          "retrieved_doc_ids": [
+            "arch-006",
+            "rb-011",
+            "rb-001",
+            "rb-005",
+            "arch-002",
+            "arch-003",
+            "rb-010"
+          ],
+          "recall_at_5": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.850345,
+          "citation_completeness": 1.0,
+          "latency_ms": 70.7243
+        }
+      ]
+    }
+  }
+}

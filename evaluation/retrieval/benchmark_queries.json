@@ -1,0 +1,151 @@
+{
+  "is_synthetic_corpus": true,
+  "corpus_source": "data/synthetic/knowledge_base",
+  "description": "24 curated AIOps retrieval benchmark queries mapped to exact doc_ids across SignalForge's 37-document synthetic operations knowledge base (exact lookups, conceptual symptoms, and multi-service incident investigations).",
+  "queries": [
+    {
+      "query_id": "q-01",
+      "category": "exact_lookup",
+      "query": "SQLSTATE 40P01 deadlock_detected on order_items and inventory_skus",
+      "expected_doc_ids": ["rb-012", "dep-2026-005"]
+    },
+    {
+      "query_id": "q-02",
+      "category": "exact_lookup",
+      "query": "ERR_CERT_DATE_INVALID tls_handshake_error openssl s_client",
+      "expected_doc_ids": ["rb-009", "inc-2026-010"]
+    },
+    {
+      "query_id": "q-03",
+      "category": "exact_lookup",
+      "query": "checkout-service v2.4.0 shipping_country_code regression rollback",
+      "expected_doc_ids": ["dep-2026-002", "inc-2026-006", "dep-2026-003"]
+    },
+    {
+      "query_id": "q-04",
+      "category": "exact_lookup",
+      "query": "pg_stat_replication pg_wal_lsn_diff replay_lag_bytes",
+      "expected_doc_ids": ["rb-013"]
+    },
+    {
+      "query_id": "q-05",
+      "category": "exact_lookup",
+      "query": "autovacuum_vacuum_scale_factor n_dead_tup pg_stat_user_tables",
+      "expected_doc_ids": ["rb-014", "dep-2026-006"]
+    },
+    {
+      "query_id": "q-06",
+      "category": "exact_lookup",
+      "query": "circuit_breaker_state=OPEN HTTP 503 checkout-service",
+      "expected_doc_ids": ["rb-010"]
+    },
+    {
+      "query_id": "q-07",
+      "category": "exact_lookup",
+      "query": "HTTP 409 idempotency_key_mismatch double charge prevention",
+      "expected_doc_ids": ["rb-011"]
+    },
+    {
+      "query_id": "q-08",
+      "category": "exact_lookup",
+      "query": "idle_in_transaction_session_timeout pg_terminate_backend PgBouncer",
+      "expected_doc_ids": ["rb-002", "arch-004", "dep-2026-006"]
+    },
+    {
+      "query_id": "q-09",
+      "category": "conceptual_symptom",
+      "query": "How should on-call responders handle a gradual memory climb ending in container restarts?",
+      "expected_doc_ids": ["rb-004", "inc-2026-004"]
+    },
+    {
+      "query_id": "q-10",
+      "category": "conceptual_symptom",
+      "query": "Card transactions are failing with upstream timeouts — how do we switch payment processors?",
+      "expected_doc_ids": ["rb-003", "arch-003", "inc-2026-003"]
+    },
+    {
+      "query_id": "q-11",
+      "category": "conceptual_symptom",
+      "query": "Requests slow down between internal services even though backend CPU looks healthy",
+      "expected_doc_ids": ["rb-005", "inc-2026-005"]
+    },
+    {
+      "query_id": "q-12",
+      "category": "conceptual_symptom",
+      "query": "Customers are experiencing slow checkouts during a high-traffic flash sale with maxed processor cores",
+      "expected_doc_ids": ["rb-001", "inc-2026-001"]
+    },
+    {
+      "query_id": "q-13",
+      "category": "conceptual_symptom",
+      "query": "Which low-priority endpoints should we shed first during an extreme traffic spike?",
+      "expected_doc_ids": ["rb-008"]
+    },
+    {
+      "query_id": "q-14",
+      "category": "conceptual_symptom",
+      "query": "How do we detect a bad software release immediately after rollout and revert safely?",
+      "expected_doc_ids": ["rb-006", "inc-2026-006"]
+    },
+    {
+      "query_id": "q-15",
+      "category": "conceptual_symptom",
+      "query": "Workers keep dropping partition assignments and spending all their time coordinating instead of processing messages",
+      "expected_doc_ids": ["rb-015"]
+    },
+    {
+      "query_id": "q-16",
+      "category": "conceptual_symptom",
+      "query": "Why did a table schema change block queries and make the database unresponsive?",
+      "expected_doc_ids": ["inc-2026-009"]
+    },
+    {
+      "query_id": "q-17",
+      "category": "multi_service_incident",
+      "query": "postgres-primary database connection pool exhaustion impacting order-service and checkout-service",
+      "expected_doc_ids": ["rb-002", "inc-2026-002", "arch-004"]
+    },
+    {
+      "query_id": "q-18",
+      "category": "multi_service_incident",
+      "query": "kafka-broker order-events consumer backlog and dead letter queue remediation for delayed confirmations",
+      "expected_doc_ids": ["rb-007", "inc-2026-007", "arch-005"]
+    },
+    {
+      "query_id": "q-19",
+      "category": "multi_service_incident",
+      "query": "payment-service webhook retry storm exhausting database connections and async Kafka queue fix",
+      "expected_doc_ids": ["inc-2026-008", "dep-2026-004", "arch-005"]
+    },
+    {
+      "query_id": "q-20",
+      "category": "multi_service_incident",
+      "query": "api-gateway east-west latency spike from keep-alive exhaustion and v3.2.1 hardening deployment",
+      "expected_doc_ids": ["inc-2026-005", "dep-2026-001", "rb-005"]
+    },
+    {
+      "query_id": "q-21",
+      "category": "multi_service_incident",
+      "query": "order-service unbounded cache OOMKilled leak and v4.1.2 bounded cache fix",
+      "expected_doc_ids": ["inc-2026-004", "dep-2026-005", "rb-004"]
+    },
+    {
+      "query_id": "q-22",
+      "category": "multi_service_incident",
+      "query": "synchronous request path from api-gateway through checkout-service to order-service and payment-service",
+      "expected_doc_ids": ["arch-001", "arch-002"]
+    },
+    {
+      "query_id": "q-23",
+      "category": "multi_service_incident",
+      "query": "checkout-service payment-service failover between stripe-eu and adyen-eu with circuit breaker",
+      "expected_doc_ids": ["arch-003", "rb-003", "rb-010"]
+    },
+    {
+      "query_id": "q-24",
+      "category": "multi_service_incident",
+      "query": "OpenTelemetry trace_id span_id propagation and 7-metric telemetry contract across services",
+      "expected_doc_ids": ["arch-006", "arch-002"]
+    }
+  ]
+}

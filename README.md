@@ -2,11 +2,13 @@
 
 SignalForge is a local-first AI-powered IT Operations Intelligence Platform (AIOps) built in Python.
 
-**Current Status — Phases 1–3 (Foundation, Multi-Signal Ingestion & Multivariate Anomaly Detection):**
+**Current Status — Phases 1–4 (Foundation, Multi-Signal Ingestion, Anomaly Detection & Hybrid Knowledge RAG):**
 - PostgreSQL 16 schema managed via Alembic (`services`, `events`, `incidents`, `deployments`, `ingestion_failures`, `metric_points`, `trace_spans`, `anomalies`)
+- Qdrant vector store (`localhost:6333`) + JSON-persisted BM25 lexical index for hybrid operations knowledge retrieval
 - Structured JSON logging and environment-based configuration
 - Validation, UTC normalization, deterministic deduplication, and OTLP JSON parsing (`services/ingestion/`)
 - Multivariate anomaly detection (`services/anomaly_detection/`): leakage-free preprocessing, operational evaluation metrics, `RollingZScoreDetector`, `IsolationForestDetector`, and PyTorch CPU `LSTMAutoencoderDetector`
+- Hybrid knowledge retrieval & evaluation (`services/retrieval/`, `evaluation/retrieval/`): section-aware Markdown chunking, CPU `all-MiniLM-L6-v2` embeddings, Qdrant cosine search, BM25Okapi keyword search, Reciprocal Rank Fusion (RRF), and reproducible retrieval benchmark
 - FastAPI HTTP API:
   - `GET /health`
   - `POST /api/v1/events/ingest`, `GET /api/v1/events`
@@ -16,6 +18,7 @@ SignalForge is a local-first AI-powered IT Operations Intelligence Platform (AIO
   - `GET /api/v1/services`
   - `GET /api/v1/incidents`
   - `POST /api/v1/anomalies/detect`, `GET /api/v1/anomalies`
+  - `POST /api/v1/knowledge/index`, `POST /api/v1/knowledge/search`
 - Offline OpenTelemetry Collector capture configuration and CLI loader (`scripts/ingest_otel_capture.py`)
 
 ## Prerequisites (Windows)
@@ -38,7 +41,7 @@ uv pip install --python .venv\Scripts\python.exe -e ".[dev]"
 # 4. Configure local environment variables
 copy .env.example .env
 
-# 5. Start PostgreSQL 16 (creates both `signalforge` and `signalforge_test`)
+# 5. Start PostgreSQL 16 (creates `signalforge` and `signalforge_test`) and Qdrant
 docker compose up -d --wait
 
 # 6. Apply Alembic migrations to the development database
@@ -135,9 +138,41 @@ Invoke-RestMethod -Method Post `
 Invoke-RestMethod "http://127.0.0.1:8000/api/v1/anomalies?service=checkout-service&is_anomaly=true"
 ```
 
+## Phase 4: Knowledge Intelligence (Hybrid Qdrant + BM25 RAG)
+
+Index the synthetic operations knowledge base (`data/synthetic/knowledge_base/`, 37 Markdown docs / 143 chunks) idempotently into Qdrant + BM25 and search in `"hybrid"`, `"dense"`, or `"bm25"` mode:
+
+```powershell
+# Index synthetic runbooks, postmortems, architecture docs, and deployment reports
+Invoke-RestMethod -Method Post `
+  -Uri "http://127.0.0.1:8000/api/v1/knowledge/index" `
+  -ContentType "application/json" `
+  -Body '{"source_dir":"data/synthetic/knowledge_base","max_chars":1200,"overlap_chars":150}'
+
+# Hybrid RRF search with optional service and doc_type filters
+Invoke-RestMethod -Method Post `
+  -Uri "http://127.0.0.1:8000/api/v1/knowledge/search" `
+  -ContentType "application/json" `
+  -Body '{"query":"database connection pool exhausted postgres","top_k":5,"mode":"hybrid","service":"postgres-primary"}'
+```
+
+Run the reproducible BM25 vs. Dense vs. Hybrid retrieval benchmark (`24` curated queries, isolated temporary Qdrant collection `signalforge_knowledge_bench` deleted on completion):
+
+```powershell
+.venv\Scripts\python scripts/run_retrieval_benchmark.py
+```
+
+Measured results on the 37-document synthetic knowledge base (`all-MiniLM-L6-v2` on CPU, `top_k=10`, document-level deduplicated metrics; see [docs/experiments/retrieval_benchmark.md](docs/experiments/retrieval_benchmark.md) and [results.json](experiments/benchmarks/retrieval_kb/results.json)):
+
+| Mode | Recall@5 | MRR@10 | nDCG@10 | Citation Completeness | p50 (ms) | p95 (ms) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `bm25` | 0.9861 | 0.9514 | 0.9384 | 1.0000 | 3.15 | 7.57 |
+| `dense` (`all-MiniLM-L6-v2`) | 0.9653 | 0.9792 | 0.9540 | 1.0000 | 52.63 | 123.31 |
+| `hybrid` (RRF, `k=60`) | 0.9861 | 0.9792 | 0.9673 | 1.0000 | 53.66 | 70.02 |
+
 ## Linting & Tests
 
-Tests run against the real PostgreSQL `signalforge_test` database using Alembic migrations:
+Tests run against the real PostgreSQL `signalforge_test` database (via Alembic migrations) and an isolated Qdrant test collection (`signalforge_knowledge_test`, cleaned up on teardown):
 
 ```powershell
 .venv\Scripts\ruff check .
