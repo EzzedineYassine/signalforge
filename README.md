@@ -2,14 +2,15 @@
 
 SignalForge is a local-first AI-powered IT Operations Intelligence Platform (AIOps) built in Python.
 
-**Current Status — Phases 1–5 (Foundation, Ingestion, Anomaly Detection, Hybrid RAG & Service Dependency Graph):**
-- PostgreSQL 16 schema managed via Alembic (`services`, `events`, `incidents`, `deployments`, `ingestion_failures`, `metric_points`, `trace_spans`, `anomalies`)
+**Current Status — Phases 1–6 (Foundation, Ingestion, Anomaly Detection, Hybrid RAG, Dependency Graph & Investigation Orchestration):**
+- PostgreSQL 16 schema managed via Alembic (`services`, `events`, `incidents`, `deployments`, `ingestion_failures`, `metric_points`, `trace_spans`, `anomalies`, `investigations`)
 - Qdrant vector store (`localhost:6333`) + JSON-persisted BM25 lexical index for hybrid operations knowledge retrieval
-- Structured JSON logging and environment-based configuration
+- Structured JSON logging and environment-based configuration (including local Ollama settings)
 - Validation, UTC normalization, deterministic deduplication, and OTLP JSON parsing (`services/ingestion/`)
 - Multivariate anomaly detection (`services/anomaly_detection/`): leakage-free preprocessing, operational evaluation metrics, `RollingZScoreDetector`, `IsolationForestDetector`, and PyTorch CPU `LSTMAutoencoderDetector`
 - Hybrid knowledge retrieval & evaluation (`services/retrieval/`, `evaluation/retrieval/`): section-aware Markdown chunking, CPU `all-MiniLM-L6-v2` embeddings, Qdrant cosine search, BM25Okapi keyword search, Reciprocal Rank Fusion (RRF), and reproducible retrieval benchmark
 - Service dependency graph & multi-signal incident correlation (`services/graph/`): NetworkX directed topology derived from parent/child `trace_spans`, cycle-safe multi-hop impact traversal, and chronological deployment/anomaly/event/incident timeline correlation
+- Bounded LangGraph incident investigation workflow (`services/investigation/`): replaceable Ollama structured-output client (`num_ctx=8192`), deterministic evidence collection + hybrid RAG retrieval, zero-evidence abstention short-circuit, deterministic citation/evidence validation, graceful LLM-failure fallback, and PostgreSQL persistence
 - FastAPI HTTP API:
   - `GET /health`
   - `POST /api/v1/events/ingest`, `GET /api/v1/events`
@@ -21,6 +22,7 @@ SignalForge is a local-first AI-powered IT Operations Intelligence Platform (AIO
   - `POST /api/v1/anomalies/detect`, `GET /api/v1/anomalies`
   - `POST /api/v1/knowledge/index`, `POST /api/v1/knowledge/search`
   - `GET /api/v1/graph/dependencies`, `GET /api/v1/graph/services/{service}/impact`, `POST /api/v1/correlation/timeline`
+  - `POST /api/v1/investigations/run`, `GET /api/v1/investigations`, `GET /api/v1/investigations/{investigation_id}`
 - Offline OpenTelemetry Collector capture configuration and CLI loader (`scripts/ingest_otel_capture.py`)
 
 ## Prerequisites (Windows)
@@ -188,6 +190,24 @@ Invoke-RestMethod -Method Post `
   -Uri "http://127.0.0.1:8000/api/v1/correlation/timeline" `
   -ContentType "application/json" `
   -Body '{"service":"checkout-service","start_time":"2026-11-20T14:00:00Z","end_time":"2026-11-20T14:30:00Z","lookback_minutes":60,"max_depth":3}'
+```
+
+## Phase 6: Bounded LangGraph Incident Investigation Orchestration
+
+Run an evidence-grounded incident investigation (collecting correlated telemetry, retrieving hybrid RAG runbooks/postmortems, synthesizing structured JSON via local Ollama with deterministic citation/evidence validation and automatic abstention on empty evidence or LLM unavailability), and query persisted audit reports:
+
+```powershell
+# Run and persist a bounded LangGraph investigation
+Invoke-RestMethod -Method Post `
+  -Uri "http://127.0.0.1:8000/api/v1/investigations/run" `
+  -ContentType "application/json" `
+  -Body '{"question":"Why did checkout-service 5xx errors spike?","service":"checkout-service","start_time":"2026-11-20T14:00:00Z","end_time":"2026-11-20T14:30:00Z","lookback_minutes":60,"max_depth":3,"top_k_docs":5}'
+
+# List persisted investigations (supports service, abstained, limit, offset)
+Invoke-RestMethod "http://127.0.0.1:8000/api/v1/investigations?service=checkout-service"
+
+# Fetch a single persisted investigation by UUID
+Invoke-RestMethod "http://127.0.0.1:8000/api/v1/investigations/<investigation_id>"
 ```
 
 ## Linting & Tests

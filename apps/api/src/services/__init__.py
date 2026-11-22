@@ -15,6 +15,13 @@ from apps.api.src.services.graph_service import (
     get_dependency_graph,
     get_service_impact,
 )
+from apps.api.src.services.investigation_service import (
+    InvestigationNotFoundError,
+    get_investigation_by_id,
+    get_llm_client,
+    list_investigations,
+    run_and_persist_investigation,
+)
 from apps.api.src.services.knowledge_service import (
     DEFAULT_BM25_INDEX_PATH,
     DEFAULT_KNOWLEDGE_DIR,
@@ -36,6 +43,7 @@ __all__ = [
     "DependencyGraphResult",
     "DetectorName",
     "InsufficientMetricsError",
+    "InvestigationNotFoundError",
     "KnowledgeIndexResult",
     "KnowledgeSourceNotFoundError",
     "KnowledgeValidationError",
@@ -46,8 +54,12 @@ __all__ = [
     "compute_anomaly_dedup_hash",
     "detect_and_persist_anomalies",
     "get_dependency_graph",
+    "get_investigation_by_id",
     "get_knowledge_retriever",
+    "get_llm_client",
     "get_service_impact",
     "index_knowledge_base",
+    "list_investigations",
+    "run_and_persist_investigation",
     "search_knowledge",
 ]

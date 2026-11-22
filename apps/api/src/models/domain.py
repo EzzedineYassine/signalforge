@@ -48,6 +48,7 @@ class Service(Base):
     metric_points: Mapped[list["MetricPoint"]] = relationship(back_populates="service")
     trace_spans: Mapped[list["TraceSpan"]] = relationship(back_populates="service")
     anomalies: Mapped[list["Anomaly"]] = relationship(back_populates="service")
+    investigations: Mapped[list["Investigation"]] = relationship(back_populates="service")
 
 
 class Event(Base):
@@ -236,4 +237,30 @@ class Anomaly(Base):
             "is_anomaly",
             text("timestamp_utc DESC"),
         ),
+    )
+
+
+class Investigation(Base):
+    __tablename__ = "investigations"
+
+    id: Mapped[uuid.UUID] = _uuid_pk()
+    service_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("services.id", ondelete="RESTRICT"), nullable=False
+    )
+    question: Mapped[str] = mapped_column(Text, nullable=False)
+    window_start: Mapped[datetime] = _tstz(nullable=False)
+    window_end: Mapped[datetime] = _tstz(nullable=False)
+    model_name: Mapped[str] = mapped_column(String(128), nullable=False)
+    abstained: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    report_json: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+    executed_nodes: Mapped[list[str]] = mapped_column(
+        JSONB, nullable=False, server_default=text("'[]'::jsonb")
+    )
+    duration_ms: Mapped[float] = mapped_column(DOUBLE_PRECISION, nullable=False)
+    created_at: Mapped[datetime] = _tstz(nullable=False, server_default=func.now())
+
+    service: Mapped[Service] = relationship(back_populates="investigations")
+
+    __table_args__ = (
+        Index("ix_investigations_service_id_created_at", "service_id", text("created_at DESC")),
     )

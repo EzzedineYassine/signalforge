@@ -27,6 +27,11 @@ from apps.api.src.schemas.graph import (
     TimelineItemResponse,
 )
 from apps.api.src.schemas.incidents import IncidentListResponse, IncidentRead
+from apps.api.src.schemas.investigations import (
+    InvestigationListResponse,
+    InvestigationRead,
+    InvestigationRunRequest,
+)
 from apps.api.src.schemas.knowledge import (
     KnowledgeIndexRequest,
     KnowledgeIndexResponse,
@@ -68,6 +73,9 @@ __all__ = [
     "IncidentListResponse",
     "IncidentRead",
     "IngestionErrorItem",
+    "InvestigationListResponse",
+    "InvestigationRead",
+    "InvestigationRunRequest",
     "KnowledgeIndexRequest",
     "KnowledgeIndexResponse",
     "KnowledgeSearchRequest",

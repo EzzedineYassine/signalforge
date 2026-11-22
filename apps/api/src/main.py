@@ -13,6 +13,7 @@ from apps.api.src.routes import (
     graph,
     health,
     incidents,
+    investigations,
     knowledge,
     metrics,
     services,
@@ -38,3 +39,4 @@ app.include_router(deployments.router)
 app.include_router(anomalies.router)
 app.include_router(knowledge.router)
 app.include_router(graph.router)
+app.include_router(investigations.router)
