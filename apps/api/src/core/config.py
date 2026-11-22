@@ -19,10 +19,15 @@ class Settings(BaseSettings):
     OLLAMA_MODEL: str = "qwen2.5:7b"
     OLLAMA_TIMEOUT_SECONDS: float = 60.0
     OLLAMA_NUM_CTX: int = 8192
+    CORS_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173"
     APP_ENV: str = "development"
     LOG_LEVEL: str = "INFO"
     API_HOST: str = "127.0.0.1"
     API_PORT: int = 8000
+
+    @property
+    def cors_origins_list(self) -> list[str]:
+        return [origin.strip() for origin in self.CORS_ORIGINS.split(",") if origin.strip()]
 
 
 @lru_cache

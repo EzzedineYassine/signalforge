@@ -11,4 +11,6 @@ dist/
 data/synthetic/**/*.csv
 data/synthetic/**/*.parquet
 data/indexes/
+apps/web/node_modules/
+apps/web/dist/
 
