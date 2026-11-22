@@ -2,13 +2,14 @@
 
 SignalForge is a local-first AI-powered IT Operations Intelligence Platform (AIOps) built in Python.
 
-**Current Status — Phases 1–4 (Foundation, Multi-Signal Ingestion, Anomaly Detection & Hybrid Knowledge RAG):**
+**Current Status — Phases 1–5 (Foundation, Ingestion, Anomaly Detection, Hybrid RAG & Service Dependency Graph):**
 - PostgreSQL 16 schema managed via Alembic (`services`, `events`, `incidents`, `deployments`, `ingestion_failures`, `metric_points`, `trace_spans`, `anomalies`)
 - Qdrant vector store (`localhost:6333`) + JSON-persisted BM25 lexical index for hybrid operations knowledge retrieval
 - Structured JSON logging and environment-based configuration
 - Validation, UTC normalization, deterministic deduplication, and OTLP JSON parsing (`services/ingestion/`)
 - Multivariate anomaly detection (`services/anomaly_detection/`): leakage-free preprocessing, operational evaluation metrics, `RollingZScoreDetector`, `IsolationForestDetector`, and PyTorch CPU `LSTMAutoencoderDetector`
 - Hybrid knowledge retrieval & evaluation (`services/retrieval/`, `evaluation/retrieval/`): section-aware Markdown chunking, CPU `all-MiniLM-L6-v2` embeddings, Qdrant cosine search, BM25Okapi keyword search, Reciprocal Rank Fusion (RRF), and reproducible retrieval benchmark
+- Service dependency graph & multi-signal incident correlation (`services/graph/`): NetworkX directed topology derived from parent/child `trace_spans`, cycle-safe multi-hop impact traversal, and chronological deployment/anomaly/event/incident timeline correlation
 - FastAPI HTTP API:
   - `GET /health`
   - `POST /api/v1/events/ingest`, `GET /api/v1/events`
@@ -19,6 +20,7 @@ SignalForge is a local-first AI-powered IT Operations Intelligence Platform (AIO
   - `GET /api/v1/incidents`
   - `POST /api/v1/anomalies/detect`, `GET /api/v1/anomalies`
   - `POST /api/v1/knowledge/index`, `POST /api/v1/knowledge/search`
+  - `GET /api/v1/graph/dependencies`, `GET /api/v1/graph/services/{service}/impact`, `POST /api/v1/correlation/timeline`
 - Offline OpenTelemetry Collector capture configuration and CLI loader (`scripts/ingest_otel_capture.py`)
 
 ## Prerequisites (Windows)
@@ -169,6 +171,24 @@ Measured results on the 37-document synthetic knowledge base (`all-MiniLM-L6-v2`
 | `bm25` | 0.9861 | 0.9514 | 0.9384 | 1.0000 | 3.15 | 7.57 |
 | `dense` (`all-MiniLM-L6-v2`) | 0.9653 | 0.9792 | 0.9540 | 1.0000 | 52.63 | 123.31 |
 | `hybrid` (RRF, `k=60`) | 0.9861 | 0.9792 | 0.9673 | 1.0000 | 53.66 | 70.02 |
+
+## Phase 5: Service Dependency Graph & Incident Correlation
+
+Derive the directed service dependency graph (`caller -> callee`) from parent/child `trace_spans`, traverse multi-hop dependencies and affected callers, and correlate deployments (with lookback window), anomalies, error/warning events, and incidents into a single chronological timeline:
+
+```powershell
+# Inspect aggregated service dependency graph (optional start_time / end_time)
+Invoke-RestMethod "http://127.0.0.1:8000/api/v1/graph/dependencies"
+
+# Compute multi-hop dependencies and affected callers around a service
+Invoke-RestMethod "http://127.0.0.1:8000/api/v1/graph/services/checkout-service/impact?max_depth=3"
+
+# Build a correlated timeline across related services (deployments include lookback_minutes)
+Invoke-RestMethod -Method Post `
+  -Uri "http://127.0.0.1:8000/api/v1/correlation/timeline" `
+  -ContentType "application/json" `
+  -Body '{"service":"checkout-service","start_time":"2026-11-20T14:00:00Z","end_time":"2026-11-20T14:30:00Z","lookback_minutes":60,"max_depth":3}'
+```
 
 ## Linting & Tests
 

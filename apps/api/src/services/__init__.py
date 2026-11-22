@@ -8,6 +8,13 @@ from apps.api.src.services.anomaly_service import (
     compute_anomaly_dedup_hash,
     detect_and_persist_anomalies,
 )
+from apps.api.src.services.graph_service import (
+    CORRELATED_EVENT_SEVERITIES,
+    DependencyGraphResult,
+    build_correlation_timeline,
+    get_dependency_graph,
+    get_service_impact,
+)
 from apps.api.src.services.knowledge_service import (
     DEFAULT_BM25_INDEX_PATH,
     DEFAULT_KNOWLEDGE_DIR,
@@ -22,9 +29,11 @@ from apps.api.src.services.knowledge_service import (
 
 __all__ = [
     "AnomalyDetectionResult",
+    "CORRELATED_EVENT_SEVERITIES",
     "DEFAULT_ARTIFACT_DIR",
     "DEFAULT_BM25_INDEX_PATH",
     "DEFAULT_KNOWLEDGE_DIR",
+    "DependencyGraphResult",
     "DetectorName",
     "InsufficientMetricsError",
     "KnowledgeIndexResult",
@@ -33,9 +42,12 @@ __all__ = [
     "QdrantUnavailableError",
     "ServiceNotFoundError",
     "VALID_DETECTORS",
+    "build_correlation_timeline",
     "compute_anomaly_dedup_hash",
     "detect_and_persist_anomalies",
+    "get_dependency_graph",
     "get_knowledge_retriever",
+    "get_service_impact",
     "index_knowledge_base",
     "search_knowledge",
 ]

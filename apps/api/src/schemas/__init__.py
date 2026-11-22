@@ -17,6 +17,15 @@ from apps.api.src.schemas.events import (
     EventRead,
     IngestionErrorItem,
 )
+from apps.api.src.schemas.graph import (
+    CorrelationTimelineRequest,
+    CorrelationTimelineResponse,
+    DependencyGraphResponse,
+    HopServiceResponse,
+    ServiceEdgeResponse,
+    ServiceImpactResponse,
+    TimelineItemResponse,
+)
 from apps.api.src.schemas.incidents import IncidentListResponse, IncidentRead
 from apps.api.src.schemas.knowledge import (
     KnowledgeIndexRequest,
@@ -44,6 +53,9 @@ __all__ = [
     "AnomalyDetectResponse",
     "AnomalyListResponse",
     "AnomalyRead",
+    "CorrelationTimelineRequest",
+    "CorrelationTimelineResponse",
+    "DependencyGraphResponse",
     "DeploymentIngestRequest",
     "DeploymentIngestResponse",
     "DeploymentListResponse",
@@ -52,6 +64,7 @@ __all__ = [
     "EventIngestResponse",
     "EventListResponse",
     "EventRead",
+    "HopServiceResponse",
     "IncidentListResponse",
     "IncidentRead",
     "IngestionErrorItem",
@@ -64,8 +77,11 @@ __all__ = [
     "MetricListResponse",
     "MetricPointRead",
     "RetrievedChunkResponse",
+    "ServiceEdgeResponse",
+    "ServiceImpactResponse",
     "ServiceListResponse",
     "ServiceSummary",
+    "TimelineItemResponse",
     "TraceIngestRequest",
     "TraceIngestResponse",
     "TraceListResponse",

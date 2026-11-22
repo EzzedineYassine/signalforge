@@ -10,6 +10,7 @@ from apps.api.src.routes import (
     anomalies,
     deployments,
     events,
+    graph,
     health,
     incidents,
     knowledge,
@@ -36,3 +37,4 @@ app.include_router(traces.router)
 app.include_router(deployments.router)
 app.include_router(anomalies.router)
 app.include_router(knowledge.router)
+app.include_router(graph.router)
