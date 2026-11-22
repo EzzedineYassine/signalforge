@@ -15,6 +15,10 @@ class Settings(BaseSettings):
     QDRANT_URL: str = "http://localhost:6333"
     QDRANT_COLLECTION: str = "signalforge_knowledge"
     EMBEDDING_MODEL_NAME: str = "sentence-transformers/all-MiniLM-L6-v2"
+    OLLAMA_BASE_URL: str = "http://localhost:11434"
+    OLLAMA_MODEL: str = "qwen2.5:7b"
+    OLLAMA_TIMEOUT_SECONDS: float = 60.0
+    OLLAMA_NUM_CTX: int = 8192
     APP_ENV: str = "development"
     LOG_LEVEL: str = "INFO"
     API_HOST: str = "127.0.0.1"
