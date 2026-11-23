@@ -1,0 +1,79 @@
+{
+  "is_synthetic_benchmark": true,
+  "database_target": "signalforge_test",
+  "environment": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python_version": "3.12.14",
+    "cpu_count": 16
+  },
+  "ingestion_throughput": {
+    "events": {
+      "batch_size": 1000,
+      "accepted": 1000,
+      "elapsed_seconds": 0.9976,
+      "events_per_second": 1002.4
+    },
+    "metrics": {
+      "batch_size": 2000,
+      "accepted": 2000,
+      "elapsed_seconds": 1.0637,
+      "metrics_per_second": 1880.26
+    }
+  },
+  "api_latencies": {
+    "GET /health": {
+      "iterations": 20,
+      "p50_ms": 7.172,
+      "p95_ms": 10.531,
+      "min_ms": 5.273,
+      "max_ms": 11.478
+    },
+    "GET /api/v1/events": {
+      "iterations": 20,
+      "p50_ms": 13.979,
+      "p95_ms": 17.241,
+      "min_ms": 11.488,
+      "max_ms": 27.331
+    },
+    "GET /api/v1/metrics": {
+      "iterations": 20,
+      "p50_ms": 16.769,
+      "p95_ms": 19.208,
+      "min_ms": 14.234,
+      "max_ms": 20.582
+    },
+    "GET /api/v1/graph/dependencies": {
+      "iterations": 20,
+      "p50_ms": 15.012,
+      "p95_ms": 18.394,
+      "min_ms": 13.935,
+      "max_ms": 23.523
+    },
+    "POST /api/v1/anomalies/detect (lstm_autoencoder, 46 pts)": {
+      "iterations": 20,
+      "p50_ms": 38.971,
+      "p95_ms": 41.706,
+      "min_ms": 36.491,
+      "max_ms": 42.364
+    },
+    "POST /api/v1/correlation/timeline": {
+      "iterations": 20,
+      "p50_ms": 37.954,
+      "p95_ms": 61.679,
+      "min_ms": 22.854,
+      "max_ms": 216.043
+    }
+  },
+  "investigation_workflow_deterministic": {
+    "mode": "deterministic (FakeLLMClient + live PostgreSQL + live Qdrant hash)",
+    "iterations": 5,
+    "p50_ms": 92.091,
+    "p95_ms": 136.539,
+    "min_ms": 73.556,
+    "max_ms": 141.786
+  },
+  "memory_rss_mb": {
+    "start_mb": 435.91,
+    "end_mb": 467.32
+  }
+}
