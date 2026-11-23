@@ -76,6 +76,14 @@ function extractErrorDetail(payload: unknown, fallback: string): string {
   return fallback;
 }
 
+function isHealthResponse(payload: unknown): payload is HealthResponse {
+  if (!payload || typeof payload !== "object") {
+    return false;
+  }
+  const record = payload as Record<string, unknown>;
+  return typeof record.status === "string" && typeof record.database === "string";
+}
+
 async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   const url = `${API_BASE_URL}${path}`;
   let response: Response;
@@ -104,8 +112,20 @@ async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
   }
 
   if (!response.ok) {
-    const fallback = `HTTP ${response.status} ${response.statusText}`;
-    throw new ApiError(response.status, extractErrorDetail(parsed, fallback));
+    const fallback = `HTTP ${response.status} ${response.statusText}`.trim();
+    const detail = extractErrorDetail(parsed, fallback);
+    const message =
+      response.status === 404
+        ? `HTTP 404 on ${path}: ${detail}. Verify the SignalForge FastAPI backend is running on ${API_BASE_URL}.`
+        : detail;
+    throw new ApiError(response.status, message);
+  }
+
+  if (parsed === null || typeof parsed !== "object") {
+    throw new ApiError(
+      response.status,
+      `Unexpected non-JSON response from ${url} (HTTP ${response.status}). Verify the SignalForge FastAPI backend is running on ${API_BASE_URL}.`,
+    );
   }
 
   return parsed as T;
@@ -120,8 +140,28 @@ export async function getHealth(): Promise<HealthResponse> {
     const message = err instanceof Error ? err.message : "Network error";
     throw new ApiError(0, `API unreachable (${API_BASE_URL}): ${message}`);
   }
-  const data = (await response.json()) as HealthResponse;
-  return data;
+
+  let parsed: unknown = null;
+  const contentType = response.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    try {
+      parsed = await response.json();
+    } catch {
+      parsed = null;
+    }
+  }
+
+  // SignalForge /health returns 200 (ok/connected) or 503 (degraded/disconnected).
+  if (isHealthResponse(parsed) && (response.ok || response.status === 503)) {
+    return parsed;
+  }
+
+  const fallback = `HTTP ${response.status} ${response.statusText}`.trim();
+  const detail = extractErrorDetail(parsed, fallback);
+  throw new ApiError(
+    response.status,
+    `SignalForge health check failed at ${url} (HTTP ${response.status}: ${detail}). Ensure the SignalForge FastAPI backend is running on ${API_BASE_URL}.`,
+  );
 }
 
 export function listServices(params?: {

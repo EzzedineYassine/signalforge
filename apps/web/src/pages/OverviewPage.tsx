@@ -33,8 +33,8 @@ interface OverviewPageProps {
   healthError: string | null;
 }
 
-function severityPillClass(severity: string): string {
-  const upper = severity.toUpperCase();
+function severityPillClass(severity: string | null | undefined): string {
+  const upper = (severity ?? "").toUpperCase();
   if (upper === "CRITICAL" || upper === "ERROR") {
     return "pill pill-danger";
   }
@@ -104,7 +104,7 @@ export function OverviewPage({ health, healthError }: OverviewPageProps) {
 
       {(error || healthError) && (
         <div className="banner banner-error" role="alert">
-          <span>{error ?? healthError}</span>
+          <span>{healthError ?? error}</span>
           <button type="button" className="btn" onClick={() => void loadOverview()}>
             Retry
           </button>
@@ -145,7 +145,9 @@ export function OverviewPage({ health, healthError }: OverviewPageProps) {
         <div className="card">
           <div className="kpi-label">System Health</div>
           <div className="kpi-value" style={{ fontSize: 18, marginTop: 12 }}>
-            {health ? `${health.status.toUpperCase()} / ${health.database}` : "UNAVAILABLE"}
+            {health && typeof health.status === "string"
+              ? `${health.status.toUpperCase()} / ${health.database ?? "unknown"}`
+              : "UNAVAILABLE"}
           </div>
           <div className="kpi-foot">GET /health</div>
         </div>

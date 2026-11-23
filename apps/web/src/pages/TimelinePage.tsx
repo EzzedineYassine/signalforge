@@ -296,7 +296,7 @@ export function TimelinePage() {
                   >
                     <div className="timeline-meta">
                       <span className={signalPillClass(item.signal_type)}>
-                        {item.signal_type.toUpperCase()}
+                        {(item.signal_type ?? "signal").toUpperCase()}
                       </span>
                       <span className="mono">{formatUtcTimestamp(item.timestamp_utc)}</span>
                       <span className="pill pill-neutral">{item.service}</span>
@@ -356,8 +356,8 @@ export function TimelinePage() {
                     <td>
                       <span
                         className={
-                          inc.severity.toUpperCase() === "CRITICAL" ||
-                          inc.severity.toUpperCase() === "ERROR"
+                          (inc.severity ?? "").toUpperCase() === "CRITICAL" ||
+                          (inc.severity ?? "").toUpperCase() === "ERROR"
                             ? "pill pill-danger"
                             : "pill pill-warn"
                         }

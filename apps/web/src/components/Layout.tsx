@@ -52,14 +52,14 @@ export function Layout({
 
   if (healthError) {
     pillClass = "pill pill-danger";
-    pillText = "API Unreachable";
+    pillText = "API Unavailable";
   } else if (health) {
     if (health.status === "ok" && health.database === "connected") {
       pillClass = "pill pill-ok";
       pillText = "API OK · DB Connected";
     } else {
       pillClass = "pill pill-warn";
-      pillText = `API ${health.status} · DB ${health.database}`;
+      pillText = `API ${health.status ?? "unknown"} · DB ${health.database ?? "unknown"}`;
     }
   }
 
