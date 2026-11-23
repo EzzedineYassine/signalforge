@@ -67,7 +67,13 @@ export function Layout({
     <div className="app-shell">
       <aside className="sidebar">
         <div className="brand">
-          <span className="brand-mark">SF</span>
+          <img
+            src="/signalforge-icon.jpg"
+            alt="SignalForge"
+            className="brand-icon"
+            width={34}
+            height={34}
+          />
           <div>
             <div className="brand-title">SignalForge</div>
             <div className="brand-subtitle">Local AIOps Console</div>

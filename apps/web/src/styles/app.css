@@ -61,18 +61,14 @@ body,
   padding: 4px 8px;
 }
 
-.brand-mark {
-  width: 30px;
-  height: 30px;
-  border-radius: 7px;
-  background: linear-gradient(135deg, #0ea5e9, #6366f1);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 14px;
-  color: #ffffff;
-  font-family: var(--font-mono);
+.brand-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid rgba(56, 189, 248, 0.32);
+  flex-shrink: 0;
+  display: block;
 }
 
 .brand-title {
